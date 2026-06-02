@@ -7,6 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   MapPin,
   Clock,
   ShieldCheck,
@@ -87,17 +92,17 @@ function CounterStat({
 
   return (
     <div ref={ref} className="text-center space-y-2">
-      <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-orange-50 to-green-50 mb-2">
-        <Icon className="h-6 w-6" style={{ color }} />
+      <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-orange-50 to-green-50 mb-1 sm:mb-2">
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" style={{ color }} />
       </div>
       <div
-        className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]"
+        className="text-2xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)]"
         style={{ color }}
       >
         {count}
         {suffix}
       </div>
-      <p className="text-sm text-gray-500 font-medium">{label}</p>
+      <p className="text-xs sm:text-sm text-gray-500 font-medium">{label}</p>
     </div>
   );
 }
@@ -139,7 +144,7 @@ function MarketCounter({
 
   return (
     <>
-      <span className="text-2xl font-bold" style={{ color }}>
+      <span className="text-lg sm:text-2xl font-bold" style={{ color }}>
         ${count}
         {suffix}
       </span>
@@ -178,8 +183,92 @@ function useInView(threshold = 0.1) {
   return { ref: elementRef, isInView };
 }
 
+/* ───── Franchise Popup Modal ───── */
+function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [selectedInterest, setSelectedInterest] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setSelectedInterest("");
+      onClose();
+    }, 2500);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto p-0 rounded-3xl border-0 shadow-2xl" showCloseButton={false}>
+        <DialogTitle className="sr-only">Get Franchise - Send Us a Message</DialogTitle>
+        {submitted ? (
+          <div className="p-10 text-center space-y-4">
+            <div className="w-20 h-20 rounded-full bg-[#22C55E]/10 flex items-center justify-center mx-auto">
+              <CheckCircle2 className="h-10 w-10 text-[#22C55E]" />
+            </div>
+            <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
+            <p className="text-gray-600">We&apos;ll get back to you within 24 hours.</p>
+          </div>
+        ) : (
+          <div className="p-5 sm:p-8">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]">Send Us a Message</h3>
+              <button onClick={onClose} className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
+                <X className="h-4 w-4 text-gray-500" />
+              </button>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
+                  <Input placeholder="Your name" required className="rounded-xl h-12" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
+                  <Input placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
+                <Input placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1.5 block">I&apos;m Interested In</label>
+                <div className="flex flex-wrap gap-2">
+                  {["Franchise", "Merchant", "Delivery Partner", "Other"].map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => setSelectedInterest(option)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
+                        selectedInterest === option
+                          ? "bg-[#FF6B00] text-white border-[#FF6B00] shadow-md"
+                          : "bg-white text-gray-600 border-gray-200 hover:border-[#FF6B00] hover:text-[#FF6B00]"
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
+                <Textarea placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
+              </div>
+              <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-[#FF6B00] to-[#FF8C33] hover:from-[#E05E00] hover:to-[#FF6B00] text-white font-bold rounded-full text-lg py-6">
+                Send Message <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </form>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 /* ───── Navbar ───── */
-function Navbar() {
+function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -209,10 +298,8 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           <a href="#home" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#FF6B00] to-[#FF8C33] flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-              <span className="text-white font-bold text-lg sm:text-xl font-[family-name:var(--font-poppins)]">
-                W
-              </span>
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#FF6B00] to-[#FF8C33] flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow overflow-hidden">
+              <img src="/wingoo-icon.png" alt="Wingoo" className="w-full h-full object-contain p-1.5 sm:p-2" />
             </div>
             <span className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-poppins)]">
               <span className="text-[#FF6B00]">Wing</span>
@@ -231,12 +318,10 @@ function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF6B00] transition-all group-hover:w-full" />
               </a>
             ))}
-            <a href="#franchise">
-              <Button className="bg-gradient-to-r from-[#FF6B00] to-[#FF8C33] hover:from-[#E05E00] hover:to-[#FF6B00] text-white font-semibold px-6 rounded-full shadow-lg hover:shadow-xl transition-all">
-                Get Franchise
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Button>
-            </a>
+            <Button onClick={onFranchiseClick} className="bg-gradient-to-r from-[#FF6B00] to-[#FF8C33] hover:from-[#E05E00] hover:to-[#FF6B00] text-white font-semibold px-6 rounded-full shadow-lg hover:shadow-xl transition-all">
+              Get Franchise
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
           </div>
 
           <button
@@ -261,11 +346,9 @@ function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a href="#franchise" onClick={() => setMobileOpen(false)}>
-              <Button className="w-full mt-2 bg-gradient-to-r from-[#FF6B00] to-[#FF8C33] text-white font-semibold rounded-full">
-                Get Franchise <ArrowRight className="ml-1 h-4 w-4" />
-              </Button>
-            </a>
+            <Button onClick={() => { setMobileOpen(false); onFranchiseClick(); }} className="w-full mt-2 bg-gradient-to-r from-[#FF6B00] to-[#FF8C33] text-white font-semibold rounded-full">
+              Get Franchise <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
           </div>
         </div>
       )}
@@ -328,29 +411,29 @@ function HeroSection() {
             </div>
           </div>
 
-          <div className="relative hidden lg:block">
+          <div className="relative mt-8 lg:mt-0">
             <div className="relative z-10">
-              <img src="/hero-banner.png" alt="Wingoo Delivery" className="rounded-3xl shadow-2xl w-full object-cover" />
+              <img src="/hero-banner.png" alt="Wingoo Delivery" className="rounded-3xl shadow-2xl w-full object-cover max-h-[400px] lg:max-h-none" />
             </div>
-            <div className="absolute -top-4 -left-4 bg-white rounded-2xl shadow-xl p-4 animate-float z-20">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#22C55E]/10 flex items-center justify-center">
-                  <CheckCircle2 className="h-5 w-5 text-[#22C55E]" />
+            <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 bg-white rounded-2xl shadow-xl p-3 sm:p-4 animate-float z-20">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#22C55E]/10 flex items-center justify-center">
+                  <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#22C55E]" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Payment</p>
-                  <p className="text-sm font-bold text-gray-800">100% Online</p>
+                  <p className="text-[10px] sm:text-xs text-gray-500">Payment</p>
+                  <p className="text-xs sm:text-sm font-bold text-gray-800">100% Online</p>
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl p-4 animate-float z-20" style={{ animationDelay: "1s" }}>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#FF6B00]/10 flex items-center justify-center">
-                  <Truck className="h-5 w-5 text-[#FF6B00]" />
+            <div className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 bg-white rounded-2xl shadow-xl p-3 sm:p-4 animate-float z-20" style={{ animationDelay: "1s" }}>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#FF6B00]/10 flex items-center justify-center">
+                  <Truck className="h-4 w-4 sm:h-5 sm:w-5 text-[#FF6B00]" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Delivery</p>
-                  <p className="text-sm font-bold text-gray-800">30 Min Avg</p>
+                  <p className="text-[10px] sm:text-xs text-gray-500">Delivery</p>
+                  <p className="text-xs sm:text-sm font-bold text-gray-800">25 Min Avg</p>
                 </div>
               </div>
             </div>
@@ -364,10 +447,10 @@ function HeroSection() {
 /* ───── Stats Bar ───── */
 function StatsBar() {
   return (
-    <section className="relative -mt-8 z-10">
+    <section className="relative -mt-4 sm:-mt-8 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-6 sm:p-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-100 p-4 sm:p-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
             <CounterStat end={55} suffix="B+" label="Market Size by 2026" icon={BarChart3} color="#FF6B00" />
             <CounterStat end={18} suffix="%" label="Annual Growth Rate" icon={TrendingUp} color="#22C55E" />
             <CounterStat end={100} suffix="%" label="Cashless Transactions" icon={CreditCard} color="#FF6B00" />
@@ -662,10 +745,10 @@ function MarketSize() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)] mt-4">Massive <span className="gradient-text">Market</span> Ahead</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
-          <div className={`bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-3xl p-8 sm:p-10 transition-all duration-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            <div className="flex items-center gap-3 mb-6">
-              <UtensilsCrossed className="h-8 w-8 text-[#FF6B00]" />
-              <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Food Delivery Market</h3>
+          <div className={`bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-2xl sm:rounded-3xl p-5 sm:p-10 transition-all duration-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <UtensilsCrossed className="h-6 w-6 sm:h-8 sm:w-8 text-[#FF6B00]" />
+              <h3 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-poppins)]">Food Delivery Market</h3>
             </div>
             <div className="space-y-6">
               <div>
@@ -686,10 +769,10 @@ function MarketSize() {
               </div>
             </div>
           </div>
-          <div className={`bg-gradient-to-br from-green-50 to-green-100/50 rounded-3xl p-8 sm:p-10 transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            <div className="flex items-center gap-3 mb-6">
-              <ShoppingBag className="h-8 w-8 text-[#22C55E]" />
-              <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Grocery Delivery Market</h3>
+          <div className={`bg-gradient-to-br from-green-50 to-green-100/50 rounded-2xl sm:rounded-3xl p-5 sm:p-10 transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <ShoppingBag className="h-6 w-6 sm:h-8 sm:w-8 text-[#22C55E]" />
+              <h3 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-poppins)]">Grocery Delivery Market</h3>
             </div>
             <div className="space-y-6">
               <div>
@@ -711,14 +794,14 @@ function MarketSize() {
             </div>
           </div>
         </div>
-        <div className="mt-8 bg-gradient-to-r from-[#FF6B00] to-[#22C55E] rounded-3xl p-8 sm:p-10 text-white">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mt-8 bg-gradient-to-r from-[#FF6B00] to-[#22C55E] rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-white">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
             <div>
               <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Combined Market Size (Food + Grocery)</h3>
               <p className="text-white/80 mt-1">2026: $55-60B → 2030: $120-130B with 18-20% CAGR</p>
             </div>
             <div className="text-center sm:text-right">
-              <p className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-poppins)]">$130B+</p>
+              <p className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-poppins)]">$130B+</p>
               <p className="text-white/80">By 2030</p>
             </div>
           </div>
@@ -747,7 +830,7 @@ function BusinessModel() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)] mt-4">Business <span className="gradient-text">Model</span></h2>
           <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">Multiple revenue channels ensuring sustainable and scalable income for the company and franchise partners</p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
           {items.map((item, i) => (
             <div key={i} className={`transition-all duration-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`} style={{ transitionDelay: `${i * 100}ms` }}>
               <Card className="h-full card-hover-effect border-0 shadow-lg rounded-2xl overflow-hidden group text-center">
@@ -757,7 +840,7 @@ function BusinessModel() {
                     <item.icon className="h-7 w-7" style={{ color: item.color }} />
                   </div>
                   <h4 className="font-bold text-sm font-[family-name:var(--font-poppins)]">{item.title}</h4>
-                  <p className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: item.color }}>{item.value}</p>
+                  <p className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: item.color }}>{item.value}</p>
                   <p className="text-gray-500 text-xs">{item.detail}</p>
                 </CardContent>
               </Card>
@@ -800,7 +883,7 @@ function FranchiseSection() {
           <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
             <h3 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)] mb-6">Franchise <span className="text-[#22C55E]">Model</span></h3>
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">To create employment through Food & Grocery Delivery in every urban and rural area of India, Wingoo has established a unique franchise model. Every taluka and every city can have its own Wingoo franchise, enabling local entrepreneurs to run a full-fledged delivery business.</p>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {franchiseRoles.map((role, i) => (
                 <div key={i} className="flex items-center gap-3 bg-white rounded-xl p-3 shadow-sm border border-gray-100">
                   <div className="w-10 h-10 rounded-lg bg-[#FF6B00]/10 flex items-center justify-center flex-shrink-0">
@@ -829,7 +912,7 @@ function FranchiseSection() {
               ))}
             </div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {incomeBreakdown.map((item, i) => (
               <div key={i} className={`transition-all duration-700 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`} style={{ transitionDelay: `${i * 150}ms` }}>
                 <Card className="h-full card-hover-effect border-0 shadow-lg rounded-2xl overflow-hidden">
@@ -839,7 +922,7 @@ function FranchiseSection() {
                       <item.icon className="h-6 w-6" style={{ color: item.color }} />
                     </div>
                     <h4 className="font-bold text-sm font-[family-name:var(--font-poppins)]">{item.title}</h4>
-                    <p className="text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: item.color }}>{item.amount}</p>
+                    <p className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ color: item.color }}>{item.amount}</p>
                     <p className="text-gray-500 text-xs">{item.detail}</p>
                     <p className="text-gray-400 text-xs font-mono">{item.calculation}</p>
                   </CardContent>
@@ -847,15 +930,15 @@ function FranchiseSection() {
               </div>
             ))}
           </div>
-          <div className="mt-8 bg-gradient-to-r from-[#FF6B00] to-[#FF8C33] rounded-3xl p-8 text-white text-center">
+          <div className="mt-8 bg-gradient-to-r from-[#FF6B00] to-[#FF8C33] rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white text-center">
             <p className="text-lg font-medium opacity-90">Total Monthly Franchise Income</p>
-            <p className="text-5xl sm:text-6xl font-bold font-[family-name:var(--font-poppins)] mt-2">₹2,00,000+</p>
+            <p className="text-4xl sm:text-5xl md:text-6xl font-bold font-[family-name:var(--font-poppins)] mt-2">₹2,00,000+</p>
             <p className="text-white/80 mt-2">With just 20 merchants and 200 daily orders</p>
           </div>
         </div>
 
         {/* Franchise Offer */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 p-8 sm:p-12 text-white">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 p-6 sm:p-12 text-white">
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF6B00]/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#22C55E]/20 rounded-full blur-3xl" />
           <div className="relative grid md:grid-cols-2 gap-8 items-center">
@@ -873,12 +956,12 @@ function FranchiseSection() {
               </div>
             </div>
             <div className="text-center">
-              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20">
                 <p className="text-gray-400 text-sm mb-2">Regular Price</p>
                 <p className="text-2xl line-through text-gray-500">₹51,000</p>
                 <div className="my-4">
                   <p className="text-gray-300 text-sm">Today&apos;s Offer</p>
-                  <p className="text-6xl sm:text-7xl font-bold font-[family-name:var(--font-poppins)] text-[#FF6B00]">₹12,000</p>
+                  <p className="text-5xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-poppins)] text-[#FF6B00]">₹12,000</p>
                 </div>
                 <p className="text-gray-400 text-sm mb-6">Just ₹1,000/month for a complete business setup</p>
                 <a href="#contact">
@@ -907,9 +990,9 @@ function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-28 bg-white" ref={ref}>
+    <section id="contact" className="py-16 sm:py-28 bg-white" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
           <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
             <Badge variant="secondary" className="bg-[#FF6B00]/10 text-[#FF6B00] px-4 py-1.5 text-sm font-semibold">Get In Touch</Badge>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)] mt-4 mb-6">Start Your <span className="gradient-text">Wingoo</span> Journey</h2>
@@ -934,7 +1017,7 @@ function ContactSection() {
           </div>
           <div className={`transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
             <Card className="shadow-xl border-0 rounded-3xl overflow-hidden">
-              <CardContent className="p-8">
+              <CardContent className="p-5 sm:p-8">
                 {submitted ? (
                   <div className="text-center py-12 space-y-4">
                     <div className="w-20 h-20 rounded-full bg-[#22C55E]/10 flex items-center justify-center mx-auto">
@@ -962,9 +1045,9 @@ function ContactSection() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1.5 block">I&apos;m Interested In</label>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 sm:gap-2">
                         {["Franchise", "Merchant", "Delivery Partner", "Other"].map((option) => (
-                          <Badge key={option} variant="outline" className="cursor-pointer hover:bg-[#FF6B00] hover:text-white hover:border-[#FF6B00] transition-all px-3 py-1.5">{option}</Badge>
+                          <Badge key={option} variant="outline" className="cursor-pointer hover:bg-[#FF6B00] hover:text-white hover:border-[#FF6B00] transition-all px-4 py-2 text-sm min-h-[44px] inline-flex items-center">{option}</Badge>
                         ))}
                       </div>
                     </div>
@@ -990,12 +1073,12 @@ function ContactSection() {
 function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF6B00] to-[#FF8C33] flex items-center justify-center">
-                <span className="text-white font-bold text-lg font-[family-name:var(--font-poppins)]">W</span>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF6B00] to-[#FF8C33] flex items-center justify-center overflow-hidden">
+                <img src="/wingoo-icon.png" alt="Wingoo" className="w-full h-full object-contain p-1.5" />
               </div>
               <span className="text-xl font-bold font-[family-name:var(--font-poppins)]">
                 <span className="text-[#FF6B00]">Wing</span>
@@ -1052,9 +1135,12 @@ function Footer() {
 
 /* ───── Main Page ───── */
 export default function WingooHome() {
+  const [franchiseOpen, setFranchiseOpen] = useState(false);
+
   return (
-    <main className="min-h-screen flex flex-col">
-      <Navbar />
+    <main className="min-h-screen flex flex-col overflow-x-hidden">
+      <FranchiseModal open={franchiseOpen} onClose={() => setFranchiseOpen(false)} />
+      <Navbar onFranchiseClick={() => setFranchiseOpen(true)} />
       <HeroSection />
       <StatsBar />
       <AboutSection />

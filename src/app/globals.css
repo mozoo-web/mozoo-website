@@ -88,8 +88,25 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Safe area for notched phones */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .card-hover-effect:hover {
+    transform: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   }
 }
 
