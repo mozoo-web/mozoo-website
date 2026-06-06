@@ -351,7 +351,7 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
 }
 
 /* ───── Hero Section ───── */
-function HeroSection() {
+function HeroSection({ onFranchiseClick }: { onFranchiseClick: () => void }) {
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
@@ -377,12 +377,10 @@ function HeroSection() {
               Mozoo brings food and grocery delivery to every corner of India — urban cities and rural towns alike. 100% online payments, zero cash handling, instant settlements for merchants.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#franchise">
-                <Button size="lg" className="bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all animate-pulse-glow">
+              <Button onClick={onFranchiseClick} size="lg" className="bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all animate-pulse-glow">
                   Start Your Franchise
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </a>
               <a href="#services">
                 <Button size="lg" variant="outline" className="border-2 border-[#EAB308] text-[#EAB308] hover:bg-[#EAB308] hover:text-white font-bold px-8 py-6 text-lg rounded-full transition-all">
                   Explore Services
@@ -850,7 +848,7 @@ function BusinessModel() {
 }
 
 /* ───── Franchise Section ───── */
-function FranchiseSection() {
+function FranchiseSection({ onFranchiseClick }: { onFranchiseClick: () => void }) {
   const { ref, isInView } = useInView();
   const franchiseRoles = [
     { icon: Store, text: "Onboard Hotels & Grocery Shops" },
@@ -892,7 +890,10 @@ function FranchiseSection() {
             </div>
           </div>
           <div className={`transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-            <img src="/franchise-image.png" alt="Mozoo Franchise" className="rounded-3xl shadow-2xl w-full" />
+            <picture>
+              <source srcSet="/franchise-image.webp" type="image/webp" />
+              <img src="/franchise-image.png" alt="Mozoo Franchise" className="rounded-3xl shadow-2xl w-full" loading="lazy" />
+            </picture>
           </div>
         </div>
 
@@ -961,11 +962,9 @@ function FranchiseSection() {
                   <p className="text-5xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-poppins)] text-[#059669]">₹12,000</p>
                 </div>
                 <p className="text-gray-400 text-sm mb-6">Just ₹1,000/month for a complete business setup</p>
-                <a href="#contact">
-                  <Button size="lg" className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6 animate-pulse-glow">
+                <Button onClick={onFranchiseClick} size="lg" className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6 animate-pulse-glow">
                     Grab This Offer Now <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                </a>
               </div>
             </div>
           </div>
@@ -1132,7 +1131,7 @@ export default function MozooHome() {
     <main className="min-h-screen flex flex-col overflow-x-hidden">
       <FranchiseModal open={franchiseOpen} onClose={() => setFranchiseOpen(false)} />
       <Navbar onFranchiseClick={() => setFranchiseOpen(true)} />
-      <HeroSection />
+      <HeroSection onFranchiseClick={() => setFranchiseOpen(true)} />
       <StatsBar />
       <AboutSection />
       <MissionVision />
@@ -1142,7 +1141,7 @@ export default function MozooHome() {
       <ProblemSolution />
       <MarketSize />
       <BusinessModel />
-      <FranchiseSection />
+      <FranchiseSection onFranchiseClick={() => setFranchiseOpen(true)} />
       <ContactSection />
       <Footer />
     </main>
