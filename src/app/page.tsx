@@ -191,11 +191,12 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setSelectedInterest("");
-      onClose();
-    }, 2500);
+  };
+
+  const handleOk = () => {
+    setSubmitted(false);
+    setSelectedInterest("");
+    onClose();
   };
 
   return (
@@ -209,6 +210,7 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
             </div>
             <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
             <p className="text-gray-600">We&apos;ll get back to you within 2 hours or Reach us on WhatsApp <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="text-[#059669] hover:underline font-semibold">+91 9823166155</a></p>
+            <button onClick={handleOk} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
           </div>
         ) : (
           <div className="p-5 sm:p-8">
@@ -997,7 +999,6 @@ function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
@@ -1036,6 +1037,7 @@ function ContactSection() {
                     </div>
                     <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
                     <p className="text-gray-600">We&apos;ll get back to you within 2 hours or Reach us on WhatsApp <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="text-[#059669] hover:underline font-semibold">+91 9823166155</a></p>
+                    <button onClick={() => setSubmitted(false)} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
