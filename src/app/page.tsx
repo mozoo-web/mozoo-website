@@ -1073,7 +1073,7 @@ function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           <div className="space-y-4">
             <div className="flex items-center">
-              <img src="/mozoo-logo.png" alt="Mozoo" className="h-12 w-auto object-contain" />
+              <img src="/mozoo-logo.png" alt="Mozoo" className="h-14 sm:h-16 w-auto object-contain" />
             </div>
             <p className="text-emerald-100/80 text-sm leading-relaxed">India&apos;s first 100% cashless food and grocery delivery platform. Serving urban and rural India with fast, reliable, and secure delivery services.</p>
           </div>
