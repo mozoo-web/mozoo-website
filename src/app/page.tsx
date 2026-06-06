@@ -1010,7 +1010,7 @@ function ContactSection() {
             <p className="text-gray-600 text-lg mb-10 leading-relaxed">Whether you want to become a franchise partner, register your restaurant or grocery store, or join as a delivery partner — we would love to hear from you. Reach out to us today!</p>
             <div className="space-y-6">
               {[
-                { icon: Phone, label: "WhatsApp Us", value: "+91 9823166155", color: "#059669", href: "https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Delivery%20Service" },
+                { icon: Phone, label: "WhatsApp Us", value: "+91 9823166155", color: "#059669", href: "https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." },
                 { icon: Mail, label: "Email Us", value: "support@mozoo.in", color: "#EAB308", href: "mailto:support@mozoo.in" },
                 { icon: Globe, label: "Website", value: "mozoo.in", color: "#059669", href: "https://mozoo.in" },
               ].map(({ icon: Icon, label, value, color, href }) => (
@@ -1119,7 +1119,7 @@ function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4 font-[family-name:var(--font-poppins)]">Contact Us</h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Phone className="h-4 w-4 text-[#FBBF24] flex-shrink-0" /><a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Delivery%20Service" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors">+91 9823166155</a></li>
+              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Phone className="h-4 w-4 text-[#FBBF24] flex-shrink-0" /><a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors">+91 9823166155</a></li>
               <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Mail className="h-4 w-4 text-[#FBBF24] flex-shrink-0" /><a href="mailto:support@mozoo.in" className="hover:text-white hover:underline transition-colors">support@mozoo.in</a></li>
               <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Globe className="h-4 w-4 text-[#FBBF24] flex-shrink-0" /><a href="https://mozoo.in" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors">mozoo.in</a></li>
             </ul>
