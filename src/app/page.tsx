@@ -297,12 +297,8 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          <a href="#home" className="flex items-center gap-2 group">
-            <img src="/mozoo-logo.png" alt="Mozoo" className="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
-            <span className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-poppins)]">
-              <span className="text-[#059669]">Mo</span>
-              <span className="text-[#EAB308]">zoo</span>
-            </span>
+          <a href="#home" className="flex items-center group">
+            <img src="/mozoo-logo.png" alt="Mozoo" className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform" />
           </a>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -1074,12 +1070,8 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <img src="/mozoo-logo.png" alt="Mozoo" className="h-10 w-auto object-contain brightness-0 invert" />
-              <span className="text-xl font-bold font-[family-name:var(--font-poppins)]">
-                <span className="text-white">Mo</span>
-                <span className="text-[#FBBF24]">zoo</span>
-              </span>
+            <div className="flex items-center">
+              <img src="/mozoo-logo.png" alt="Mozoo" className="h-12 w-auto object-contain" />
             </div>
             <p className="text-emerald-100/80 text-sm leading-relaxed">India&apos;s first 100% cashless food and grocery delivery platform. Serving urban and rural India with fast, reliable, and secure delivery services.</p>
           </div>
