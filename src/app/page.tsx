@@ -377,12 +377,12 @@ function HeroSection({ onFranchiseClick }: { onFranchiseClick: () => void }) {
               Mozoo brings food and grocery delivery to every corner of India — urban cities and rural towns alike. 100% online payments, zero cash handling, instant settlements for merchants.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button onClick={onFranchiseClick} size="lg" className="bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all animate-pulse-glow">
+              <Button onClick={onFranchiseClick} size="lg" className="flex-1 bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all animate-pulse-glow">
                   Start Your Franchise
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              <a href="#services">
-                <Button size="lg" variant="outline" className="border-2 border-[#EAB308] text-[#EAB308] hover:bg-[#EAB308] hover:text-white font-bold px-8 py-6 text-lg rounded-full transition-all">
+              <a href="#services" className="flex-1">
+                <Button size="lg" variant="outline" className="w-full border-2 border-[#EAB308] text-[#EAB308] hover:bg-[#EAB308] hover:text-white font-bold px-8 py-6 text-lg rounded-full transition-all">
                   Explore Services
                 </Button>
               </a>
