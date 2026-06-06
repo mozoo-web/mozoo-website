@@ -1,14 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://mozoo.in/sitemap.xml
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
 User-agent: Bingbot
 Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: *
-Allow: /
+Crawl-delay: 1
