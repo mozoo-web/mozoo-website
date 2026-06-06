@@ -41,12 +41,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-mozoo-orange: #FF6B00;
-  --color-mozoo-orange-light: #FF8C33;
-  --color-mozoo-orange-dark: #E05E00;
-  --color-mozoo-green: #22C55E;
-  --color-mozoo-green-light: #4ADE80;
-  --color-mozoo-green-dark: #16A34A;
+  --color-mozoo-emerald: #059669;
+  --color-mozoo-emerald-light: #10B981;
+  --color-mozoo-emerald-dark: #047857;
+  --color-mozoo-yellow: #EAB308;
+  --color-mozoo-yellow-light: #FBBF24;
+  --color-mozoo-yellow-dark: #CA8A04;
 }
 
 :root {
@@ -117,8 +117,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(255, 107, 0, 0.6); }
+  0%, 100% { box-shadow: 0 0 20px rgba(5, 150, 105, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(5, 150, 105, 0.6); }
 }
 
 @keyframes slide-up {
@@ -176,21 +176,21 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #FF6B00, #FF8C33);
+  background: linear-gradient(135deg, #059669, #10B981);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-green {
-  background: linear-gradient(135deg, #22C55E, #4ADE80);
+  background: linear-gradient(135deg, #EAB308, #FBBF24);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, #FF6B00 0%, #FF8C33 50%, #22C55E 100%);
+  background: linear-gradient(135deg, #059669 0%, #10B981 50%, #EAB308 100%);
 }
 
 .glass-effect {
@@ -216,9 +216,9 @@
   background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #FF6B00;
+  background: #059669;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #E05E00;
+  background: #047857;
 }
