@@ -41,12 +41,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-wingoo-orange: #FF6B00;
-  --color-wingoo-orange-light: #FF8C33;
-  --color-wingoo-orange-dark: #E05E00;
-  --color-wingoo-green: #22C55E;
-  --color-wingoo-green-light: #4ADE80;
-  --color-wingoo-green-dark: #16A34A;
+  --color-mozoo-orange: #FF6B00;
+  --color-mozoo-orange-light: #FF8C33;
+  --color-mozoo-orange-dark: #E05E00;
+  --color-mozoo-green: #22C55E;
+  --color-mozoo-green-light: #4ADE80;
+  --color-mozoo-green-dark: #16A34A;
 }
 
 :root {

@@ -299,11 +299,11 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
         <div className="flex items-center justify-between h-16 sm:h-20">
           <a href="#home" className="flex items-center gap-2 group">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#FF6B00] to-[#FF8C33] flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow overflow-hidden">
-              <img src="/wingoo-icon.png" alt="Wingoo" className="w-full h-full object-contain p-1.5 sm:p-2" />
+              <img src="/mozoo-logo.png" alt="Mozoo" className="w-full h-full object-contain p-1 sm:p-1.5" />
             </div>
             <span className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-poppins)]">
-              <span className="text-[#FF6B00]">Wing</span>
-              <span className="text-[#22C55E]">oo</span>
+              <span className="text-[#FF6B00]">Mo</span>
+              <span className="text-[#22C55E]">zoo</span>
             </span>
           </a>
 
@@ -380,7 +380,7 @@ function HeroSection() {
               <span className="gradient-text-green">Everywhere</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 max-w-xl leading-relaxed">
-              Wingoo brings food and grocery delivery to every corner of India — urban cities and rural towns alike. 100% online payments, zero cash handling, instant settlements for merchants.
+              Mozoo brings food and grocery delivery to every corner of India — urban cities and rural towns alike. 100% online payments, zero cash handling, instant settlements for merchants.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="#franchise">
@@ -413,7 +413,7 @@ function HeroSection() {
 
           <div className="relative mt-8 lg:mt-0">
             <div className="relative z-10">
-              <img src="/hero-banner.png" alt="Wingoo Delivery" className="rounded-3xl shadow-2xl w-full object-cover max-h-[400px] lg:max-h-none" />
+              <img src="/hero-banner.png" alt="Mozoo Delivery" className="rounded-3xl shadow-2xl w-full object-cover max-h-[400px] lg:max-h-none" />
             </div>
             <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 bg-white rounded-2xl shadow-xl p-3 sm:p-4 animate-float z-20">
               <div className="flex items-center gap-2 sm:gap-3">
@@ -472,22 +472,22 @@ function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className={`relative transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
             <div className="relative mx-auto max-w-sm">
-              <img src="/app-mockup.png" alt="Wingoo App" className="rounded-3xl shadow-2xl w-full" />
+              <img src="/app-mockup.png" alt="Mozoo App" className="rounded-3xl shadow-2xl w-full" />
               <div className="absolute -z-10 -top-6 -left-6 w-full h-full bg-gradient-to-br from-[#FF6B00]/20 to-[#22C55E]/20 rounded-3xl" />
             </div>
           </div>
           <div className={`space-y-6 transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
             <Badge variant="secondary" className="bg-[#FF6B00]/10 text-[#FF6B00] hover:bg-[#FF6B00]/20 px-4 py-1.5 text-sm font-semibold">
-              About Wingoo
+              About Mozoo
             </Badge>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)]">
               Transforming Delivery Across <span className="gradient-text">India</span>
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed">
-              Wingoo is an Indian startup that is revolutionizing the food and grocery delivery landscape. For the first time in the country, a single app provides rapid cashless delivery services for both urban and rural areas, bridging the gap that has long existed in India&apos;s delivery ecosystem.
+              Mozoo is an Indian startup that is revolutionizing the food and grocery delivery landscape. For the first time in the country, a single app provides rapid cashless delivery services for both urban and rural areas, bridging the gap that has long existed in India&apos;s delivery ecosystem.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              Through our innovative franchise business model, we are creating employment opportunities in cities and rural areas alike. Starting from Maharashtra, Wingoo is set to expand across the entire nation, bringing fast, reliable, and 100% cashless delivery to every doorstep.
+              Through our innovative franchise business model, we are creating employment opportunities in cities and rural areas alike. Starting from Maharashtra, Mozoo is set to expand across the entire nation, bringing fast, reliable, and 100% cashless delivery to every doorstep.
             </p>
             <div className="grid grid-cols-2 gap-4 pt-4">
               {[
@@ -555,10 +555,10 @@ function MissionVision() {
 function ServicesSection() {
   const { ref, isInView } = useInView();
   const services: { icon: LucideIcon; title: string; description: string; color: string; bg: string; features: string[] }[] = [
-    { icon: UtensilsCrossed, title: "Food Delivery", description: "Order from your favourite local restaurants and get hot, fresh meals delivered fast to your doorstep. From street food to fine dining, Wingoo connects you with the best eateries in your area.", color: "#FF6B00", bg: "bg-orange-50", features: ["30 Min Delivery", "Live Tracking", "100% Cashless"] },
+    { icon: UtensilsCrossed, title: "Food Delivery", description: "Order from your favourite local restaurants and get hot, fresh meals delivered fast to your doorstep. From street food to fine dining, Mozoo connects you with the best eateries in your area.", color: "#FF6B00", bg: "bg-orange-50", features: ["30 Min Delivery", "Live Tracking", "100% Cashless"] },
     { icon: ShoppingBag, title: "Grocery Delivery", description: "Get daily essentials, fresh produce, and groceries delivered from trusted local stores. No more waiting in long queues — shop from home and receive your groceries at your convenience.", color: "#22C55E", bg: "bg-green-50", features: ["Fresh Produce", "Daily Essentials", "Instant Delivery"] },
     { icon: Smartphone, title: "Easy App Access", description: "Our user-friendly app makes ordering effortless. Browse menus, track deliveries in real time, and make secure digital payments — all in a few taps. Available on Android and iOS.", color: "#FF6B00", bg: "bg-orange-50", features: ["Android & iOS", "Real-time Tracking", "Secure Payments"] },
-    { icon: Store, title: "Merchant Partnerships", description: "Restaurants and grocery stores can join Wingoo to reach more customers. Enjoy instant settlements, zero inventory costs, and powerful marketing tools to grow your business digitally.", color: "#22C55E", bg: "bg-green-50", features: ["Instant Settlement", "Zero Inventory", "Marketing Support"] },
+    { icon: Store, title: "Merchant Partnerships", description: "Restaurants and grocery stores can join Mozoo to reach more customers. Enjoy instant settlements, zero inventory costs, and powerful marketing tools to grow your business digitally.", color: "#22C55E", bg: "bg-green-50", features: ["Instant Settlement", "Zero Inventory", "Marketing Support"] },
   ];
 
   return (
@@ -598,7 +598,7 @@ function ServicesSection() {
 function HowItWorks() {
   const { ref, isInView } = useInView();
   const steps = [
-    { step: "01", title: "Download App", description: "Download the Wingoo app from Google Play Store or Apple App Store. Create your account in seconds with your phone number.", icon: Smartphone, color: "#FF6B00" },
+    { step: "01", title: "Download App", description: "Download the Mozoo app from Google Play Store or Apple App Store. Create your account in seconds with your phone number.", icon: Smartphone, color: "#FF6B00" },
     { step: "02", title: "Browse & Order", description: "Browse restaurants and grocery stores near you. Add items to your cart and place your order with just a few taps.", icon: ShoppingBag, color: "#22C55E" },
     { step: "03", title: "Pay Online", description: "Complete your payment securely using UPI, card, or wallet. 100% cashless — no cash handling at any point.", icon: CreditCard, color: "#FF6B00" },
     { step: "04", title: "Fast Delivery", description: "Track your order in real time as our delivery partner brings it to your doorstep. Average delivery in 30 minutes.", icon: Truck, color: "#22C55E" },
@@ -635,10 +635,10 @@ function HowItWorks() {
 function USPSection() {
   const { ref, isInView } = useInView();
   const usps = [
-    { icon: CreditCard, title: "NO CASH — Only Online Payment", description: "Every transaction on Wingoo is 100% digital. No cash exchanges hands at any point, eliminating fraud, mismatch, and cash handling issues entirely. Customers pay online after delivery is confirmed." },
+    { icon: CreditCard, title: "NO CASH — Only Online Payment", description: "Every transaction on Mozoo is 100% digital. No cash exchanges hands at any point, eliminating fraud, mismatch, and cash handling issues entirely. Customers pay online after delivery is confirmed." },
     { icon: Wallet, title: "UPI / Card / Wallet Accepted", description: "We support all major payment methods including UPI, debit and credit cards, and digital wallets. Customers choose their preferred payment method, and delivery partners never handle any cash." },
     { icon: ShieldCheck, title: "Zero Fraud & Cash Mismatch", description: "Since there is no cash handling, the common problems of fraud, cash mismatch, and settlement disputes are completely eliminated, ensuring trust and transparency for all stakeholders." },
-    { icon: Store, title: "No Warehouse, No Dark Store", description: "Wingoo operates with zero inventory costs. We do not maintain warehouses or dark stores. Orders are fulfilled directly from partner restaurants and grocery stores, keeping overhead minimal." },
+    { icon: Store, title: "No Warehouse, No Dark Store", description: "Mozoo operates with zero inventory costs. We do not maintain warehouses or dark stores. Orders are fulfilled directly from partner restaurants and grocery stores, keeping overhead minimal." },
     { icon: Zap, title: "Instant Merchant Settlements", description: "Hotels and grocery shops receive instant settlements for their orders. No waiting for weekly or monthly payouts — merchants get their money as soon as the order is delivered and paid for." },
     { icon: Award, title: "Unique Franchise Business Model", description: "Our innovative franchise model creates business opportunities in every taluka and city. Franchise partners earn from commissions, delivery fees, subscriptions, and local advertising revenue." },
   ];
@@ -647,9 +647,9 @@ function USPSection() {
     <section id="usp" className="py-20 sm:py-28 bg-gray-50" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <Badge variant="secondary" className="bg-[#FF6B00]/10 text-[#FF6B00] hover:bg-[#FF6B00]/20 px-4 py-1.5 text-sm font-semibold">Why Wingoo</Badge>
+          <Badge variant="secondary" className="bg-[#FF6B00]/10 text-[#FF6B00] hover:bg-[#FF6B00]/20 px-4 py-1.5 text-sm font-semibold">Why Mozoo</Badge>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)] mt-4">Unique Selling <span className="gradient-text">Points</span></h2>
-          <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">What makes Wingoo different from every other delivery platform in India</p>
+          <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">What makes Mozoo different from every other delivery platform in India</p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {usps.map((usp, i) => (
@@ -681,7 +681,7 @@ function ProblemSolution() {
     "Other platforms don't offer both employment and business opportunities",
   ];
   const solutions = [
-    "Wingoo provides delivery services in both rural and urban areas at fair commission rates",
+    "Mozoo provides delivery services in both rural and urban areas at fair commission rates",
     "Since orders are 100% cashless, small hotels and shops receive instant settlements",
     "Our franchise model creates business opportunities in every taluka and city",
     "Small hotels and shops get new market access through our digital platform",
@@ -713,7 +713,7 @@ function ProblemSolution() {
             <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-green-100 h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center"><CheckCircle2 className="h-6 w-6 text-green-500" /></div>
-                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-green-600">Wingoo Solutions</h3>
+                <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] text-green-600">Mozoo Solutions</h3>
               </div>
               <div className="space-y-4">
                 {solutions.map((s, i) => (
@@ -861,7 +861,7 @@ function FranchiseSection() {
     { icon: TrendingUp, text: "Grow Business in Your Area" },
     { icon: HeadphonesIcon, text: "Support Hotel & Grocery Vendors" },
     { icon: Target, text: "Local Digital Marketing" },
-    { icon: Smartphone, text: "Promote Wingoo App" },
+    { icon: Smartphone, text: "Promote Mozoo App" },
   ];
   const incomeBreakdown = [
     { title: "Order Commission Income", detail: "5% commission per order from hotels & marts", amount: "₹1,50,000", icon: Percent, color: "#FF6B00", calculation: "6,000 orders × ₹25/order" },
@@ -876,13 +876,13 @@ function FranchiseSection() {
         <div className="text-center mb-16">
           <Badge variant="secondary" className="bg-[#FF6B00]/10 text-[#FF6B00] px-4 py-1.5 text-sm font-semibold">Partner With Us</Badge>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)] mt-4">Franchise <span className="gradient-text">Opportunity</span></h2>
-          <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">Become a Wingoo franchise partner and build your own delivery business in your city or taluka</p>
+          <p className="text-gray-600 text-lg mt-4 max-w-2xl mx-auto">Become a Mozoo franchise partner and build your own delivery business in your city or taluka</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
             <h3 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)] mb-6">Franchise <span className="text-[#22C55E]">Model</span></h3>
-            <p className="text-gray-600 text-lg mb-8 leading-relaxed">To create employment through Food & Grocery Delivery in every urban and rural area of India, Wingoo has established a unique franchise model. Every taluka and every city can have its own Wingoo franchise, enabling local entrepreneurs to run a full-fledged delivery business.</p>
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">To create employment through Food & Grocery Delivery in every urban and rural area of India, Mozoo has established a unique franchise model. Every taluka and every city can have its own Mozoo franchise, enabling local entrepreneurs to run a full-fledged delivery business.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {franchiseRoles.map((role, i) => (
                 <div key={i} className="flex items-center gap-3 bg-white rounded-xl p-3 shadow-sm border border-gray-100">
@@ -895,7 +895,7 @@ function FranchiseSection() {
             </div>
           </div>
           <div className={`transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-            <img src="/franchise-image.png" alt="Wingoo Franchise" className="rounded-3xl shadow-2xl w-full" />
+            <img src="/franchise-image.png" alt="Mozoo Franchise" className="rounded-3xl shadow-2xl w-full" />
           </div>
         </div>
 
@@ -945,7 +945,7 @@ function FranchiseSection() {
             <div>
               <Badge className="bg-[#FF6B00] text-white border-0 px-4 py-1.5 text-sm font-semibold mb-4">Limited Time Offer</Badge>
               <h3 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-poppins)] mb-4">Golden Franchise Offer</h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">Start your own delivery business with Wingoo at an unbeatable price. This limited-time golden offer gives you everything you need to launch and succeed.</p>
+              <p className="text-gray-300 text-lg leading-relaxed mb-6">Start your own delivery business with Mozoo at an unbeatable price. This limited-time golden offer gives you everything you need to launch and succeed.</p>
               <div className="space-y-3">
                 {["Business Franchise Kit", "Digital Marketing Banner & Business Kit", "Business Support & Sale Promotion Video"].map((item) => (
                   <div key={item} className="flex items-center gap-3">
@@ -995,13 +995,13 @@ function ContactSection() {
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
           <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
             <Badge variant="secondary" className="bg-[#FF6B00]/10 text-[#FF6B00] px-4 py-1.5 text-sm font-semibold">Get In Touch</Badge>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)] mt-4 mb-6">Start Your <span className="gradient-text">Wingoo</span> Journey</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-poppins)] mt-4 mb-6">Start Your <span className="gradient-text">Mozoo</span> Journey</h2>
             <p className="text-gray-600 text-lg mb-10 leading-relaxed">Whether you want to become a franchise partner, register your restaurant or grocery store, or join as a delivery partner — we would love to hear from you. Reach out to us today!</p>
             <div className="space-y-6">
               {[
                 { icon: Phone, label: "Call Us", value: "+91 9798 11 9798", color: "#FF6B00" },
-                { icon: Mail, label: "Email Us", value: "info@wingoo.com", color: "#22C55E" },
-                { icon: Globe, label: "Website", value: "www.wingoo.com", color: "#FF6B00" },
+                { icon: Mail, label: "Email Us", value: "info@mozoo.com", color: "#22C55E" },
+                { icon: Globe, label: "Website", value: "www.mozoo.com", color: "#FF6B00" },
               ].map(({ icon: Icon, label, value, color }) => (
                 <div key={label} className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${color}10` }}>
@@ -1078,11 +1078,11 @@ function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF6B00] to-[#FF8C33] flex items-center justify-center overflow-hidden">
-                <img src="/wingoo-icon.png" alt="Wingoo" className="w-full h-full object-contain p-1.5" />
+                <img src="/mozoo-logo.png" alt="Mozoo" className="w-full h-full object-contain p-1" />
               </div>
               <span className="text-xl font-bold font-[family-name:var(--font-poppins)]">
-                <span className="text-[#FF6B00]">Wing</span>
-                <span className="text-[#22C55E]">oo</span>
+                <span className="text-[#FF6B00]">Mo</span>
+                <span className="text-[#22C55E]">zoo</span>
               </span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">India&apos;s first 100% cashless food and grocery delivery platform. Serving urban and rural India with fast, reliable, and secure delivery services.</p>
@@ -1107,8 +1107,8 @@ function Footer() {
             <h4 className="font-bold text-lg mb-4 font-[family-name:var(--font-poppins)]">Contact Us</h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-gray-400 text-sm"><Phone className="h-4 w-4 text-[#FF6B00]" /> +91 9798 11 9798</li>
-              <li className="flex items-center gap-2 text-gray-400 text-sm"><Mail className="h-4 w-4 text-[#22C55E]" /> info@wingoo.com</li>
-              <li className="flex items-center gap-2 text-gray-400 text-sm"><Globe className="h-4 w-4 text-[#FF6B00]" /> www.wingoo.com</li>
+              <li className="flex items-center gap-2 text-gray-400 text-sm"><Mail className="h-4 w-4 text-[#22C55E]" /> info@mozoo.com</li>
+              <li className="flex items-center gap-2 text-gray-400 text-sm"><Globe className="h-4 w-4 text-[#FF6B00]" /> www.mozoo.com</li>
             </ul>
             <div className="flex gap-3 mt-6">
               {["Facebook", "Instagram", "Twitter"].map((social) => (
@@ -1122,7 +1122,7 @@ function Footer() {
       </div>
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm">&copy; 2026 Wingoo. All rights reserved.</p>
+          <p className="text-gray-500 text-sm">&copy; 2026 Mozoo. All rights reserved.</p>
           <div className="flex gap-6 text-gray-500 text-sm">
             <a href="#" className="hover:text-[#FF6B00] transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-[#FF6B00] transition-colors">Terms of Service</a>
@@ -1134,7 +1134,7 @@ function Footer() {
 }
 
 /* ───── Main Page ───── */
-export default function WingooHome() {
+export default function MozooHome() {
   const [franchiseOpen, setFranchiseOpen] = useState(false);
 
   return (

@@ -22,11 +22,11 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Wingoo - Food & Grocery Delivery | Cashless Delivery Across India",
+  title: "Mozoo - Food & Grocery Delivery | Cashless Delivery Across India",
   description:
-    "Wingoo is India's first 100% cashless food and grocery delivery platform serving both urban and rural areas. Fast delivery, online payments, franchise opportunities available.",
+    "Mozoo is India's first 100% cashless food and grocery delivery platform serving both urban and rural areas. Fast delivery, online payments, franchise opportunities available.",
   keywords: [
-    "Wingoo",
+    "Mozoo",
     "food delivery",
     "grocery delivery",
     "cashless delivery",
@@ -35,21 +35,21 @@ export const metadata: Metadata = {
     "India delivery app",
     "quick commerce",
   ],
-  authors: [{ name: "Wingoo" }],
+  authors: [{ name: "Mozoo" }],
   icons: {
-    icon: "/wingoo-logo.png",
+    icon: "/mozoo-logo.png",
   },
   openGraph: {
-    title: "Wingoo - Food & Grocery Delivery",
+    title: "Mozoo - Food & Grocery Delivery",
     description:
       "India's first 100% cashless food & grocery delivery platform for urban and rural India",
-    url: "https://wingoo.com",
-    siteName: "Wingoo",
+    url: "https://mozoo.com",
+    siteName: "Mozoo",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wingoo - Food & Grocery Delivery",
+    title: "Mozoo - Food & Grocery Delivery",
     description:
       "India's first 100% cashless food & grocery delivery platform",
   },
