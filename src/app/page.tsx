@@ -993,19 +993,19 @@ function ContactSection() {
             <p className="text-gray-600 text-lg mb-10 leading-relaxed">Whether you want to become a franchise partner, register your restaurant or grocery store, or join as a delivery partner — we would love to hear from you. Reach out to us today!</p>
             <div className="space-y-6">
               {[
-                { icon: Phone, label: "Call Us", value: "+91 99232 55166", color: "#059669" },
-                { icon: Mail, label: "Email Us", value: "info@mozoo.com", color: "#EAB308" },
-                { icon: Globe, label: "Website", value: "www.mozoo.com", color: "#059669" },
-              ].map(({ icon: Icon, label, value, color }) => (
-                <div key={label} className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${color}10` }}>
+                { icon: Phone, label: "WhatsApp Us", value: "+91 9923255166", color: "#059669", href: "https://wa.me/919923255166?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Delivery%20Service" },
+                { icon: Mail, label: "Email Us", value: "support@mozoo.in", color: "#EAB308", href: "mailto:support@mozoo.in" },
+                { icon: Globe, label: "Website", value: "mozoo.in", color: "#059669", href: "https://mozoo.in" },
+              ].map(({ icon: Icon, label, value, color, href }) => (
+                <a key={label} href={href} target={label === "Website" ? "_blank" : undefined} rel={label === "Website" ? "noopener noreferrer" : undefined} className="flex items-center gap-4 group">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform" style={{ backgroundColor: `${color}10` }}>
                     <Icon className="h-6 w-6" style={{ color }} />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">{label}</p>
-                    <p className="text-lg font-semibold">{value}</p>
+                    <p className="text-lg font-semibold group-hover:underline">{value}</p>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>
@@ -1094,9 +1094,9 @@ function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4 font-[family-name:var(--font-poppins)]">Contact Us</h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Phone className="h-4 w-4 text-[#FBBF24]" /> +91 99232 55166</li>
-              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Mail className="h-4 w-4 text-[#FBBF24]" /> info@mozoo.com</li>
-              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Globe className="h-4 w-4 text-[#FBBF24]" /> www.mozoo.com</li>
+              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Phone className="h-4 w-4 text-[#FBBF24] flex-shrink-0" /><a href="https://wa.me/919923255166?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Delivery%20Service" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors">+91 9923255166</a></li>
+              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Mail className="h-4 w-4 text-[#FBBF24] flex-shrink-0" /><a href="mailto:support@mozoo.in" className="hover:text-white hover:underline transition-colors">support@mozoo.in</a></li>
+              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Globe className="h-4 w-4 text-[#FBBF24] flex-shrink-0" /><a href="https://mozoo.in" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors">mozoo.in</a></li>
             </ul>
             <div className="flex gap-3 mt-6">
               {["Facebook", "Instagram", "Twitter"].map((social) => (

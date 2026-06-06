@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Mozoo - Food & Grocery Delivery",
     description:
       "India's first 100% cashless food & grocery delivery platform for urban and rural India",
-    url: "https://mozoo.com",
+    url: "https://mozoo.in",
     siteName: "Mozoo",
     type: "website",
   },
