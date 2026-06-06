@@ -616,7 +616,7 @@ function HowItWorks() {
                 <div className="w-24 h-24 rounded-3xl bg-white shadow-lg mx-auto flex items-center justify-center mb-6 border border-gray-100 group hover:shadow-xl transition-shadow">
                   <s.icon className="h-10 w-10 group-hover:scale-110 transition-transform" style={{ color: s.color }} />
                 </div>
-                <div className="text-5xl font-bold font-[family-name:var(--font-poppins)] opacity-10 mb-2" style={{ color: s.color }}>{s.step}</div>
+                <div className="text-5xl font-bold font-[family-name:var(--font-poppins)] text-gray-300 mb-2">{s.step}</div>
                 <h4 className="text-lg font-bold font-[family-name:var(--font-poppins)] mb-2">{s.title}</h4>
                 <p className="text-gray-600 text-sm leading-relaxed">{s.description}</p>
               </div>
