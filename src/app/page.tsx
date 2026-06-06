@@ -407,7 +407,10 @@ function HeroSection() {
 
           <div className="relative mt-8 lg:mt-0">
             <div className="relative z-10">
-              <img src="/hero-banner.png" alt="Mozoo Delivery" className="rounded-3xl shadow-2xl w-full object-cover max-h-[400px] lg:max-h-none" />
+              <picture>
+                <source srcSet="/hero-banner.webp" type="image/webp" />
+                <img src="/hero-banner.png" alt="Mozoo Delivery" className="rounded-3xl shadow-2xl w-full object-cover max-h-[400px] lg:max-h-none" loading="eager" />
+              </picture>
             </div>
             <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 bg-white rounded-2xl shadow-xl p-3 sm:p-4 animate-float z-20">
               <div className="flex items-center gap-2 sm:gap-3">
