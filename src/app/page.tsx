@@ -278,13 +278,21 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      window.history.replaceState(null, "", `/${sectionId !== "home" ? sectionId : ""}`);
+    }
+  };
+
   const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
-    { label: "USP", href: "#usp" },
-    { label: "Franchise", href: "#franchise" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", id: "home" },
+    { label: "About", id: "about" },
+    { label: "Services", id: "services" },
+    { label: "USP", id: "usp" },
+    { label: "Franchise", id: "franchise" },
+    { label: "Contact", id: "contact" },
   ];
 
   return (
@@ -297,20 +305,20 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          <a href="#home" className="flex items-center group">
+          <button onClick={() => scrollToSection("home")} className="flex items-center group">
             <img src="/mozoo-logo.png" alt="Mozoo" className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform" />
-          </a>
+          </button>
 
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
                 className="text-sm font-medium text-gray-700 hover:text-[#059669] transition-colors relative group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#059669] transition-all group-hover:w-full" />
-              </a>
+              </button>
             ))}
             <Button onClick={onFranchiseClick} className="bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-semibold px-6 rounded-full shadow-lg hover:shadow-xl transition-all">
               Get Franchise
@@ -331,14 +339,13 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
         <div className="lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-xl">
           <div className="px-4 py-4 space-y-2">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block px-4 py-3 text-gray-700 hover:text-[#059669] hover:bg-emerald-50 rounded-xl transition-all font-medium"
+              <button
+                key={link.id}
+                onClick={() => { setMobileOpen(false); scrollToSection(link.id); }}
+                className="block w-full text-left px-4 py-3 text-gray-700 hover:text-[#059669] hover:bg-emerald-50 rounded-xl transition-all font-medium"
               >
                 {link.label}
-              </a>
+              </button>
             ))}
             <Button onClick={() => { setMobileOpen(false); onFranchiseClick(); }} className="w-full mt-2 bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-semibold rounded-full">
               Get Franchise <ArrowRight className="ml-1 h-4 w-4" />
@@ -352,6 +359,14 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
 
 /* ───── Hero Section ───── */
 function HeroSection({ onFranchiseClick }: { onFranchiseClick: () => void }) {
+  const scrollToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      window.history.replaceState(null, "", `/${sectionId !== "home" ? sectionId : ""}`);
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
@@ -381,11 +396,11 @@ function HeroSection({ onFranchiseClick }: { onFranchiseClick: () => void }) {
                   Start Your Franchise
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              <a href="#services" className="flex-1">
+              <button onClick={() => scrollToSection("services")} className="flex-1">
                 <Button size="lg" variant="outline" className="w-full border-2 border-[#EAB308] text-[#EAB308] hover:bg-[#EAB308] hover:text-white font-bold px-8 py-6 text-lg rounded-full transition-all">
                   Explore Services
                 </Button>
-              </a>
+              </button>
             </div>
             <div className="flex flex-wrap gap-6 pt-4">
               <div className="flex items-center gap-2 text-gray-600">
@@ -1067,6 +1082,14 @@ function ContactSection() {
 
 /* ───── Footer ───── */
 function Footer() {
+  const scrollToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      window.history.replaceState(null, "", `/${sectionId !== "home" ? sectionId : ""}`);
+    }
+  };
+
   return (
     <footer className="bg-[#047857] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -1080,8 +1103,8 @@ function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4 font-[family-name:var(--font-poppins)]">Quick Links</h4>
             <ul className="space-y-2">
-              {[{ label: "Home", href: "#home" }, { label: "About Us", href: "#about" }, { label: "Services", href: "#services" }, { label: "Franchise", href: "#franchise" }, { label: "Contact", href: "#contact" }].map((link) => (
-                <li key={link.href}><a href={link.href} className="text-emerald-100/70 hover:text-[#FBBF24] transition-colors text-sm">{link.label}</a></li>
+              {[{ label: "Home", id: "home" }, { label: "About Us", id: "about" }, { label: "Services", id: "services" }, { label: "Franchise", id: "franchise" }, { label: "Contact", id: "contact" }].map((link) => (
+                <li key={link.id}><button onClick={() => scrollToSection(link.id)} className="text-emerald-100/70 hover:text-[#FBBF24] transition-colors text-sm">{link.label}</button></li>
               ))}
             </ul>
           </div>
