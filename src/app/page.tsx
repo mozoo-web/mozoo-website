@@ -993,7 +993,7 @@ function ContactSection() {
             <p className="text-gray-600 text-lg mb-10 leading-relaxed">Whether you want to become a franchise partner, register your restaurant or grocery store, or join as a delivery partner — we would love to hear from you. Reach out to us today!</p>
             <div className="space-y-6">
               {[
-                { icon: Phone, label: "Call Us", value: "+91 9798 11 9798", color: "#059669" },
+                { icon: Phone, label: "Call Us", value: "+91 99232 55166", color: "#059669" },
                 { icon: Mail, label: "Email Us", value: "info@mozoo.com", color: "#EAB308" },
                 { icon: Globe, label: "Website", value: "www.mozoo.com", color: "#059669" },
               ].map(({ icon: Icon, label, value, color }) => (
@@ -1094,7 +1094,7 @@ function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4 font-[family-name:var(--font-poppins)]">Contact Us</h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Phone className="h-4 w-4 text-[#FBBF24]" /> +91 9798 11 9798</li>
+              <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Phone className="h-4 w-4 text-[#FBBF24]" /> +91 99232 55166</li>
               <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Mail className="h-4 w-4 text-[#FBBF24]" /> info@mozoo.com</li>
               <li className="flex items-center gap-2 text-emerald-100/70 text-sm"><Globe className="h-4 w-4 text-[#FBBF24]" /> www.mozoo.com</li>
             </ul>
