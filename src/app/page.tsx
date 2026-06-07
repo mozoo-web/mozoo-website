@@ -311,6 +311,10 @@ const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbw6zbhKH3CrXOJ
 
 /* ───── Franchise Popup Modal ───── */
 function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [selectedInterest, setSelectedInterest] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -329,17 +333,15 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
     e.preventDefault();
     setSubmitting(true);
     try {
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
       const data = {
-        fullName: formData.get("fullName") || "",
-        phone: formData.get("phone") || "",
-        email: formData.get("email") || "",
+        fullName,
+        phone,
+        email,
         interest: selectedInterest,
         state: selectedState,
         city: selectedCity,
         taluka: selectedTaluka,
-        message: formData.get("message") || "",
+        message,
       };
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
@@ -358,6 +360,10 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
 
   const handleOk = () => {
     setSubmitted(false);
+    setFullName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
     setSelectedInterest("");
     setSelectedState("");
     setSelectedCity("");
@@ -390,16 +396,16 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
-                  <Input name="fullName" placeholder="Your name" required className="rounded-xl h-12" />
+                  <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" required className="rounded-xl h-12" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
-                  <Input name="phone" placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
+                  <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
-                <Input name="email" placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
+                <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
               </div>
               {/* State / City / Taluka Cascading Dropdowns */}
               <div className="grid sm:grid-cols-3 gap-4">
@@ -464,7 +470,7 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
-                <Textarea name="message" placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
+                <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
               </div>
               <Button type="submit" size="lg" disabled={submitting} className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
                 {submitting ? "Sending..." : <>Send Message <ArrowRight className="ml-2 h-5 w-5" /></>}
@@ -1202,6 +1208,10 @@ function FranchiseSection({ onFranchiseClick }: { onFranchiseClick: () => void }
 /* ───── Contact Section ───── */
 function ContactSection() {
   const { ref, isInView } = useInView();
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [selectedInterest, setSelectedInterest] = useState("");
@@ -1220,17 +1230,15 @@ function ContactSection() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
       const data = {
-        fullName: formData.get("fullName") || "",
-        phone: formData.get("phone") || "",
-        email: formData.get("email") || "",
+        fullName,
+        phone,
+        email,
         interest: selectedInterest,
         state: selectedState,
         city: selectedCity,
         taluka: selectedTaluka,
-        message: formData.get("message") || "",
+        message,
       };
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
@@ -1283,7 +1291,7 @@ function ContactSection() {
                     </div>
                     <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
                     <p className="text-gray-600">We&apos;ll get back to you within 2 hours or Reach us on WhatsApp <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="text-[#059669] hover:underline font-semibold">+91 9823166155</a></p>
-                    <button onClick={() => { setSubmitted(false); setSelectedInterest(""); setSelectedState(""); setSelectedCity(""); setSelectedTaluka(""); }} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
+                    <button onClick={() => { setSubmitted(false); setFullName(""); setPhone(""); setEmail(""); setMessage(""); setSelectedInterest(""); setSelectedState(""); setSelectedCity(""); setSelectedTaluka(""); }} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
@@ -1291,16 +1299,16 @@ function ContactSection() {
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
-                        <Input name="fullName" placeholder="Your name" required className="rounded-xl h-12" />
+                        <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" required className="rounded-xl h-12" />
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
-                        <Input name="phone" placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
+                        <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
                       </div>
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
-                      <Input name="email" placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
+                      <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
                     </div>
                     {/* State / City / Taluka Cascading Dropdowns */}
                     <div className="grid sm:grid-cols-3 gap-4">
@@ -1365,7 +1373,7 @@ function ContactSection() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
-                      <Textarea name="message" placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
+                      <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
                     </div>
                     <Button type="submit" size="lg" disabled={submitting} className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
                       {submitting ? "Sending..." : <>Send Message <ArrowRight className="ml-2 h-5 w-5" /></>}
