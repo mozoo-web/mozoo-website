@@ -307,7 +307,7 @@ function useInView(threshold = 0.1) {
 }
 
 /* ───── Google Spreadsheet URL ───── */
-const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyXbyBZeixLpaQSYFK-9hoPrEhkYGcxccXKe7KkcbHh7d6TvZuMd1jnATokdbeC9KWoTA/exec";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxrrPkvxp4or2OvM6ZV81jBmPd0VzfLrqII-qZ_6u9aoU_PmIL_kDjMZEDTIfLONwoxPQ/exec";
 
 /* ───── Reusable Franchise Form Component ───── */
 function FranchiseForm({ onSuccess }: { onSuccess?: () => void }) {
