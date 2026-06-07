@@ -214,7 +214,6 @@ const NAV_LINKS = [
   { label: "Home", href: "/", id: "home" },
   { label: "About", href: "/", id: "about" },
   { label: "Services", href: "/", id: "services" },
-  { label: "USP", href: "/", id: "usp" },
   { label: "Franchise", href: "/", id: "franchise" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Contact", href: "/", id: "contact" },

@@ -515,7 +515,7 @@ function CTASection() {
                 Get Franchise Now
               </Button>
               <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20Mozoo%20Franchise.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 font-bold px-8 py-6 text-lg rounded-full transition-all">
+                <Button size="lg" variant="outline" className="border-2 border-white bg-transparent text-white hover:bg-white/10 hover:text-white font-bold px-8 py-6 text-lg rounded-full transition-all">
                   <Phone className="mr-2 h-5 w-5" /> WhatsApp Us
                 </Button>
               </a>
