@@ -64,9 +64,29 @@ export const metadata: Metadata = {
     canonical: "https://mozoo.in",
   },
   icons: {
-    icon: "/mozoo-logo.png",
-    apple: "/mozoo-logo.png",
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      {
+        url: "/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: "/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+    ],
   },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "Mozoo - Food & Grocery Delivery | 100% Cashless",
     description:
@@ -121,7 +141,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "Mozoo",
               "url": "https://mozoo.in",
-              "logo": "https://mozoo.in/mozoo-logo.png",
+              "logo": "https://mozoo.in/android-chrome-512x512.png",
               "description": "India's first 100% cashless food and grocery delivery platform serving urban and rural India.",
               "telephone": "+91-9823166155",
               "email": "support@mozoo.in",
