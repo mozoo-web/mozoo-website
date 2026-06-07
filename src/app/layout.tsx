@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { SiteShell } from "@/components/site-shell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -203,8 +204,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} antialiased bg-white text-foreground`}
       >
-        {children}
-        <Toaster />
+        <SiteShell>{children}</SiteShell>
 
         {/* WhatsApp Floating Button - Mobile Responsive */}
         <a
