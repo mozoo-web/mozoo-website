@@ -186,19 +186,21 @@ export default function RootLayout({
         {children}
         <Toaster />
 
-        {/* WhatsApp Floating Button */}
+        {/* WhatsApp Floating Button - Mobile Responsive */}
         <a
           href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details."
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          className="fixed bottom-6 right-6 z-[999] group"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[999] group"
+          style={{ marginBottom: "env(safe-area-inset-bottom, 0px)" }}
         >
-          <span className="absolute -top-12 right-0 bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
+          {/* Tooltip - hidden on mobile (hover not available), visible on desktop */}
+          <span className="hidden sm:block absolute -top-12 right-0 bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg pointer-events-none">
             Chat with us!
             <span className="absolute -bottom-1 right-4 w-2 h-2 bg-gray-900 rotate-45" />
           </span>
-          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#25D366] hover:bg-[#20BD5A] rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all hover:scale-110 animate-bounce-subtle">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#25D366] hover:bg-[#20BD5A] active:bg-[#1DA851] rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all hover:scale-105 active:scale-95 animate-bounce-subtle">
             <svg viewBox="0 0 32 32" className="w-7 h-7 sm:w-8 sm:h-8 fill-white">
               <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.132 6.744 3.054 9.38L1.056 31.2l6.064-1.952c2.52 1.68 5.52 2.656 8.884 2.656C24.826 31.904 32 24.728 32 16.004S24.826 0 16.004 0zm9.312 22.592c-.392 1.104-1.936 2.02-3.172 2.288-.848.18-1.956.324-5.688-1.224-4.776-1.98-7.848-6.828-8.084-7.144-.228-.316-1.932-2.576-1.932-4.916s1.224-3.488 1.66-3.964c.436-.476.952-.596 1.268-.596.316 0 .632.004.908.016.292.012.684-.112 1.068.816.392.948 1.332 3.256 1.448 3.492.116.236.196.512.04.828-.156.316-.236.512-.472.788-.236.276-.496.616-.708.828-.236.236-.484.492-.208.964.276.472 1.228 2.024 2.636 3.28 1.812 1.616 3.34 2.116 3.812 2.352.472.236.748.196 1.024-.12.276-.316 1.18-1.38 1.496-1.856.316-.476.632-.392 1.068-.236.436.156 2.756 1.3 3.228 1.536.472.236.788.356.904.548.116.196.116 1.116-.276 2.22z"/>
             </svg>
