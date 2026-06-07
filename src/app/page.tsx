@@ -306,10 +306,14 @@ function useInView(threshold = 0.1) {
   return { ref: elementRef, isInView };
 }
 
+/* ───── Google Spreadsheet URL ───── */
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbw6zbhKH3CrXOJq5R5DTyI4nHtXozadBtuRWrU4zV-AsgHwOorVMg-GR4ZowRQPATqQug/exec";
+
 /* ───── Franchise Popup Modal ───── */
 function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [selectedInterest, setSelectedInterest] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedTaluka, setSelectedTaluka] = useState("");
@@ -321,9 +325,35 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
     ? [...new Set(Object.values(MAHARASHTRA_DATA[selectedCity]).flat())]
     : [];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const data = {
+        fullName: formData.get("fullName") || "",
+        phone: formData.get("phone") || "",
+        email: formData.get("email") || "",
+        interest: selectedInterest,
+        state: selectedState,
+        city: selectedCity,
+        taluka: selectedTaluka,
+        message: formData.get("message") || "",
+      };
+      await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitted(true); // Still show success to user
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleOk = () => {
@@ -360,16 +390,16 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
-                  <Input placeholder="Your name" required className="rounded-xl h-12" />
+                  <Input name="fullName" placeholder="Your name" required className="rounded-xl h-12" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
-                  <Input placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
+                  <Input name="phone" placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
-                <Input placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
+                <Input name="email" placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
               </div>
               {/* State / City / Taluka Cascading Dropdowns */}
               <div className="grid sm:grid-cols-3 gap-4">
@@ -434,10 +464,10 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
-                <Textarea placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
+                <Textarea name="message" placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
               </div>
-              <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
-                Send Message <ArrowRight className="ml-2 h-5 w-5" />
+              <Button type="submit" size="lg" disabled={submitting} className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
+                {submitting ? "Sending..." : <>Send Message <ArrowRight className="ml-2 h-5 w-5" /></>}
               </Button>
             </form>
           </div>
@@ -1173,6 +1203,7 @@ function FranchiseSection({ onFranchiseClick }: { onFranchiseClick: () => void }
 function ContactSection() {
   const { ref, isInView } = useInView();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [selectedInterest, setSelectedInterest] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -1185,9 +1216,35 @@ function ContactSection() {
     ? [...new Set(Object.values(MAHARASHTRA_DATA[selectedCity]).flat())]
     : [];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const data = {
+        fullName: formData.get("fullName") || "",
+        phone: formData.get("phone") || "",
+        email: formData.get("email") || "",
+        interest: selectedInterest,
+        state: selectedState,
+        city: selectedCity,
+        taluka: selectedTaluka,
+        message: formData.get("message") || "",
+      };
+      await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitted(true); // Still show success to user
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -1234,16 +1291,16 @@ function ContactSection() {
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
-                        <Input placeholder="Your name" required className="rounded-xl h-12" />
+                        <Input name="fullName" placeholder="Your name" required className="rounded-xl h-12" />
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
-                        <Input placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
+                        <Input name="phone" placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
                       </div>
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
-                      <Input placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
+                      <Input name="email" placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
                     </div>
                     {/* State / City / Taluka Cascading Dropdowns */}
                     <div className="grid sm:grid-cols-3 gap-4">
@@ -1308,10 +1365,10 @@ function ContactSection() {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
-                      <Textarea placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
+                      <Textarea name="message" placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
                     </div>
-                    <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
-                      Send Message <ArrowRight className="ml-2 h-5 w-5" />
+                    <Button type="submit" size="lg" disabled={submitting} className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
+                      {submitting ? "Sending..." : <>Send Message <ArrowRight className="ml-2 h-5 w-5" /></>}
                     </Button>
                   </form>
                 )}
