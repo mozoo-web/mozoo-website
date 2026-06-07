@@ -521,6 +521,7 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
     { label: "Services", id: "services" },
     { label: "USP", id: "usp" },
     { label: "Franchise", id: "franchise" },
+    { label: "How It Works", href: "/how-it-works" },
     { label: "Contact", id: "contact" },
   ];
 
@@ -540,14 +541,25 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
 
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="text-sm font-medium text-gray-700 hover:text-[#059669] transition-colors relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#059669] transition-all group-hover:w-full" />
-              </button>
+              link.href ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-medium text-gray-700 hover:text-[#059669] transition-colors relative group"
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#059669] transition-all group-hover:w-full" />
+                </a>
+              ) : (
+                <button
+                  key={link.id}
+                  onClick={() => scrollToSection(link.id!)}
+                  className="text-sm font-medium text-gray-700 hover:text-[#059669] transition-colors relative group"
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#059669] transition-all group-hover:w-full" />
+                </button>
+              )
             ))}
             <Button onClick={onFranchiseClick} className="bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-semibold px-6 rounded-full shadow-lg hover:shadow-xl transition-all">
               Get Franchise
@@ -568,13 +580,24 @@ function Navbar({ onFranchiseClick }: { onFranchiseClick: () => void }) {
         <div className="lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-xl">
           <div className="px-4 py-4 space-y-2">
             {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => { setMobileOpen(false); scrollToSection(link.id); }}
-                className="block w-full text-left px-4 py-3 text-gray-700 hover:text-[#059669] hover:bg-emerald-50 rounded-xl transition-all font-medium"
-              >
-                {link.label}
-              </button>
+              link.href ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-[#059669] hover:bg-emerald-50 rounded-xl transition-all font-medium"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <button
+                  key={link.id}
+                  onClick={() => { setMobileOpen(false); scrollToSection(link.id!); }}
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-[#059669] hover:bg-emerald-50 rounded-xl transition-all font-medium"
+                >
+                  {link.label}
+                </button>
+              )
             ))}
             <Button onClick={() => { setMobileOpen(false); onFranchiseClick(); }} className="w-full mt-2 bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-semibold rounded-full">
               Get Franchise <ArrowRight className="ml-1 h-4 w-4" />
@@ -1283,8 +1306,14 @@ function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4 font-[family-name:var(--font-poppins)]">Quick Links</h4>
             <ul className="space-y-2">
-              {[{ label: "Home", id: "home" }, { label: "About Us", id: "about" }, { label: "Services", id: "services" }, { label: "Franchise", id: "franchise" }, { label: "Contact", id: "contact" }].map((link) => (
-                <li key={link.id}><button onClick={() => scrollToSection(link.id)} className="text-emerald-100/70 hover:text-[#FBBF24] transition-colors text-sm">{link.label}</button></li>
+              {[{ label: "Home", id: "home" }, { label: "About Us", id: "about" }, { label: "How It Works", href: "/how-it-works" }, { label: "Services", id: "services" }, { label: "Franchise", id: "franchise" }, { label: "Contact", id: "contact" }].map((link) => (
+                <li key={link.label}>{
+                  link.href ? (
+                    <a href={link.href} className="text-emerald-100/70 hover:text-[#FBBF24] transition-colors text-sm">{link.label}</a>
+                  ) : (
+                    <button onClick={() => scrollToSection(link.id!)} className="text-emerald-100/70 hover:text-[#FBBF24] transition-colors text-sm">{link.label}</button>
+                  )
+                }</li>
               ))}
             </ul>
           </div>
