@@ -7,6 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Dialog,
   DialogContent,
   DialogTitle,
@@ -44,6 +51,122 @@ import {
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
+
+/* ───── Maharashtra State / City / Taluka Data ───── */
+const MAHARASHTRA_DATA: Record<string, Record<string, string[]>> = {
+  "Pune": {
+    "Pune City": ["Haveli", "Mulshi", "Baramati", "Indapur", "Daund", "Shirur", "Purandar", "Velha", "Maval", "Junnar", "Ambegaon", "Khed"],
+    "Pimpri-Chinchwad": ["Haveli", "Mulshi", "Maval"],
+  },
+  "Mumbai": {
+    "Mumbai City": ["Mumbai City"],
+    "Mumbai Suburban": ["Mumbai Suburban"],
+  },
+  "Nagpur": {
+    "Nagpur City": ["Nagpur", "Hingna", "Kamptee", "Parseoni", "Ramtek", "Savner", "Kalmeshwar", "Mouda", "Kuhi", "Bhiwapur", "Umred"],
+    "Nagpur Rural": ["Katol", "Narkhed", "Sausar", "Pandhurna", "Brahmapuri"],
+  },
+  "Nashik": {
+    "Nashik City": ["Nashik", "Dindori", "Igatpuri", "Sinnar", "Niphad", "Yeola", "Chandwad", "Surgana", "Kalwan", "Baglan", "Deola", "Malegaon", "Satana"],
+    "Malegaon": ["Malegaon", "Satana", "Kalwan", "Baglan", "Deola", "Chandwad"],
+  },
+  "Thane": {
+    "Thane City": ["Thane", "Kalyan", "Bhiwandi", "Shahapur", "Murbad", "Ambernath", "Ulhasnagar"],
+    "Kalyan-Dombivli": ["Kalyan", "Ulhasnagar", "Ambernath"],
+  },
+  "Aurangabad": {
+    "Aurangabad City": ["Aurangabad", "Paithan", "Gangapur", "Kannad", "Khuldabad", "Sillod", "Phulambri", "Vaijapur"],
+  },
+  "Solapur": {
+    "Solapur City": ["Solapur", "Barshi", "Akkalkot", "Pandharpur", "Mohol", "Madha", "Karmala", "Mangalwedha", "Malshiras", "Sangole", "Vairag"],
+  },
+  "Kolhapur": {
+    "Kolhapur City": ["Kolhapur", "Ichalkaranji", "Panhala", "Shahuwadi", "Kagal", "Gadhinglaj", "Chandgad", "Ajra", "Radhanagari", "Bhudargad", "Shirol", "Hatkanangle"],
+  },
+  "Sangli": {
+    "Sangli City": ["Miraj", "Sangli", "Tasgaon", "Khanapur", "Atpadi", "Jat", "Kavathe-Mahankal", "Tasgaon", "Walwa", "Palus", "Kadegaon", "Shirala"],
+  },
+  "Satara": {
+    "Satara City": ["Satara", "Karad", "Wai", "Mahabaleshwar", "Patan", "Koregaon", "Phaltan", "Maan", "Khatav", "Jawali", "Wai", "Khandala"],
+  },
+  "Ratnagiri": {
+    "Ratnagiri City": ["Ratnagiri", "Chiplun", "Dapoli", "Guhagar", "Khed", "Lanja", "Mandangad", "Rajapur", "Sangameshwar"],
+  },
+  "Sindhudurg": {
+    "Sindhudurg City": ["Kudal", "Sawantwadi", "Malvan", "Kankavli", "Devgad", "Vaibhavwadi", "Dodamarg", "Vengurla", "Sindhudurg"],
+  },
+  "Raigad": {
+    "Raigad City": ["Alibag", "Pen", "Panvel", "Uran", "Karjat", "Khalapur", "Roha", "Mahad", "Poladpur", "Shrivardhan", "Mhasla", "Tala", "Sudhagad", "Pali"],
+  },
+  "Palghar": {
+    "Palghar City": ["Palghar", "Dahanu", "Talasari", "Vasai", "Nalasopara", "Boisar", "Jawhar", "Mokhada", "Wada", "Vikramgad"],
+  },
+  "Dhule": {
+    "Dhule City": ["Dhule", "Shirpur", "Shindkheda", "Sakri", "Dondaicha"],
+  },
+  "Jalgaon": {
+    "Jalgaon City": ["Jalgaon", "Bhusawal", "Chopda", "Erandol", "Amalner", "Chalisgaon", "Bodvad", "Yaval", "Raver", "Muktainagar", "Pachora", "Jamner", "Parola", "Dharangaon"],
+  },
+  "Nandurbar": {
+    "Nandurbar City": ["Nandurbar", "Shahada", "Taloda", "Akkalkuwa", "Navapur", "Toranmal"],
+  },
+  "Ahmednagar": {
+    "Ahmednagar City": ["Ahmednagar", "Shrirampur", "Newasa", "Shevgaon", "Pathardi", "Rahuri", "Sangamner", "Akole", "Karjat", "Jamkhed", "Parner", "Shrigonda"],
+  },
+  "Jalna": {
+    "Jalna City": ["Jalna", "Ambad", "Partur", "Ghansawangi", "Badnapur", "Mantha", "Jafrabad", "Bhokardan"],
+  },
+  "Beed": {
+    "Beed City": ["Beed", "Georai", "Majalgaon", "Ashti", "Patoda", "Shirur", "Dharur", "Wadwani", "Kej", "Ambajogai", "Parli", "Ambejogai"],
+  },
+  "Latur": {
+    "Latur City": ["Latur", "Udgir", "Ahmedpur", "Ausa", "Nilanga", "Renapur", "Chakur", "Shirur Anantpal", "Deoni"],
+  },
+  "Osmanabad": {
+    "Osmanabad City": ["Osmanabad", "Tuljapur", "Lohara", "Omerga", "Kalamb", "Bhum", "Paranda", "Vashim", "Washi"],
+  },
+  "Parbhani": {
+    "Parbhani City": ["Parbhani", "Jintur", "Gangakhed", "Sonpeth", "Purna", "Manwath", "Pathri", "Selu", "Palam", "Sailu"],
+  },
+  "Hingoli": {
+    "Hingoli City": ["Hingoli", "Kalamnuri", "Sengaon", "Aundha", "Vasmat", "Wasmath", "Basmath"],
+  },
+  "Nanded": {
+    "Nanded City": ["Nanded", "Kinwat","Mahur", "Hadgaon", "Mudkhed", "Bhokar", "Loha", "Kandhar", "Mukhed", "Deglur", "Naigaon", "Biloli", "Ardhapur", "Kinvat"],
+  },
+  "Amravati": {
+    "Amravati City": ["Amravati", "Bhatkuli", "Nandgaon Khandeshwar", "Chandur", "Dhamangaon", "Achalpur", "Morshi", "Warud", "Daryapur", "Anjangaon Surji", "Chikhaldara", "Dharni"],
+  },
+  "Akola": {
+    "Akola City": ["Akola", "Murtizapur", "Akot", "Telhara", "Balapur", "Patur", "Barshi Takli", "Murtizapur"],
+  },
+  "Wardha": {
+    "Wardha City": ["Wardha", "Hinganghat", "Deoli", "Seloo", "Arvi", "Karanja", "Ashti", "Samudrapur"],
+  },
+  "Yavatmal": {
+    "Yavatmal City": ["Yavatmal", "Pusad", "Digras", "Wani", "Umarkhed", "Darwha", "Pandharkaoda", "Ghatanji", "Arni", "Kelapur", "Ralegaon", "Maregaon", "Zari-Jamani"],
+  },
+  "Washim": {
+    "Washim City": ["Washim", "Malegaon", "Risod", "Mangrulpir", "Karanja", "Manora", "Akola"],
+  },
+  "Buldhana": {
+    "Buldhana City": ["Buldhana", "Chikhli", "Mehkar", "Khamgaon", "Shegaon", "Malkapur", "Nandura", "Jalgaon Jamod", "Sindkhed Raja", "Lonar", "Deulgaon Raja", "Sangrampur", "Sultanpur"],
+  },
+  "Chandrapur": {
+    "Chandrapur City": ["Chandrapur", "Ballarpur", "Warora", "Brahmapuri", "Gadchiroli", "Mul", "Sindewahi", "Nagbhid", "Bhadravati", "Chimur", "Pombhurna", "Sindewahi", "Rajura", "Korpana", "Gondpipri"],
+  },
+  "Gadchiroli": {
+    "Gadchiroli City": ["Gadchiroli", "Chamorshi", "Aheri", "Sironcha", "Dhanora", "Etapalli", "Bhamragad", "Kurkheda", "Korchi", "Armori", "Desaiganj", "Mulchera"],
+  },
+  "Bhandara": {
+    "Bhandara City": ["Bhandara", "Tumsar", "Pauni", "Sakoli", "Lakhni", "Lakhandur", "Mohadi", "Pavni"],
+  },
+  "Gondia": {
+    "Gondia City": ["Gondia", "Tiroda", "Goregaon", "Salekasa", "Arjuni Morgaon", "Sadak Arjuni", "Deori"],
+  },
+};
+
+const STATES = ["Maharashtra"];
 
 /* ───── Animated Counter Component ───── */
 function CounterStat({
@@ -187,6 +310,16 @@ function useInView(threshold = 0.1) {
 function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [selectedInterest, setSelectedInterest] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedTaluka, setSelectedTaluka] = useState("");
+
+  // When State is selected (Maharashtra), show cities
+  const cityOptions = selectedState ? Object.keys(MAHARASHTRA_DATA) : [];
+  // When City is selected, show talukas (unique only)
+  const talukaOptions = selectedCity && MAHARASHTRA_DATA[selectedCity]
+    ? [...new Set(Object.values(MAHARASHTRA_DATA[selectedCity]).flat())]
+    : [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,6 +329,9 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
   const handleOk = () => {
     setSubmitted(false);
     setSelectedInterest("");
+    setSelectedState("");
+    setSelectedCity("");
+    setSelectedTaluka("");
     onClose();
   };
 
@@ -234,6 +370,48 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
                 <Input placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
+              </div>
+              {/* State / City / Taluka Cascading Dropdowns */}
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">State</label>
+                  <Select value={selectedState} onValueChange={(val) => { setSelectedState(val); setSelectedCity(""); setSelectedTaluka(""); }} required>
+                    <SelectTrigger className="w-full rounded-xl h-12">
+                      <SelectValue placeholder="Select State" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STATES.map((state) => (
+                        <SelectItem key={state} value={state}>{state}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">City</label>
+                  <Select value={selectedCity} onValueChange={(val) => { setSelectedCity(val); setSelectedTaluka(""); }} disabled={!selectedState} required>
+                    <SelectTrigger className="w-full rounded-xl h-12">
+                      <SelectValue placeholder={selectedState ? "Select City" : "Select State first"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {cityOptions.map((city) => (
+                        <SelectItem key={city} value={city}>{city}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Taluka</label>
+                  <Select value={selectedTaluka} onValueChange={setSelectedTaluka} disabled={!selectedCity} required>
+                    <SelectTrigger className="w-full rounded-xl h-12">
+                      <SelectValue placeholder={selectedCity ? "Select Taluka" : "Select City first"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {talukaOptions.map((taluka) => (
+                        <SelectItem key={taluka} value={taluka}>{taluka}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-1.5 block">I&apos;m Interested In</label>
@@ -995,6 +1173,17 @@ function FranchiseSection({ onFranchiseClick }: { onFranchiseClick: () => void }
 function ContactSection() {
   const { ref, isInView } = useInView();
   const [submitted, setSubmitted] = useState(false);
+  const [selectedInterest, setSelectedInterest] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedTaluka, setSelectedTaluka] = useState("");
+
+  // When State is selected (Maharashtra), show cities
+  const cityOptions = selectedState ? Object.keys(MAHARASHTRA_DATA) : [];
+  // When City is selected, show talukas (unique only)
+  const talukaOptions = selectedCity && MAHARASHTRA_DATA[selectedCity]
+    ? [...new Set(Object.values(MAHARASHTRA_DATA[selectedCity]).flat())]
+    : [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1037,7 +1226,7 @@ function ContactSection() {
                     </div>
                     <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
                     <p className="text-gray-600">We&apos;ll get back to you within 2 hours or Reach us on WhatsApp <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="text-[#059669] hover:underline font-semibold">+91 9823166155</a></p>
-                    <button onClick={() => setSubmitted(false)} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
+                    <button onClick={() => { setSubmitted(false); setSelectedInterest(""); setSelectedState(""); setSelectedCity(""); setSelectedTaluka(""); }} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
@@ -1056,11 +1245,64 @@ function ContactSection() {
                       <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
                       <Input placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
                     </div>
+                    {/* State / City / Taluka Cascading Dropdowns */}
+                    <div className="grid sm:grid-cols-3 gap-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">State</label>
+                        <Select value={selectedState} onValueChange={(val) => { setSelectedState(val); setSelectedCity(""); setSelectedTaluka(""); }} required>
+                          <SelectTrigger className="w-full rounded-xl h-12">
+                            <SelectValue placeholder="Select State" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {STATES.map((state) => (
+                              <SelectItem key={state} value={state}>{state}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">City</label>
+                        <Select value={selectedCity} onValueChange={(val) => { setSelectedCity(val); setSelectedTaluka(""); }} disabled={!selectedState} required>
+                          <SelectTrigger className="w-full rounded-xl h-12">
+                            <SelectValue placeholder={selectedState ? "Select City" : "Select State first"} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {cityOptions.map((city) => (
+                              <SelectItem key={city} value={city}>{city}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">Taluka</label>
+                        <Select value={selectedTaluka} onValueChange={setSelectedTaluka} disabled={!selectedCity} required>
+                          <SelectTrigger className="w-full rounded-xl h-12">
+                            <SelectValue placeholder={selectedCity ? "Select Taluka" : "Select City first"} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {talukaOptions.map((taluka) => (
+                              <SelectItem key={taluka} value={taluka}>{taluka}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1.5 block">I&apos;m Interested In</label>
-                      <div className="flex flex-wrap gap-2 sm:gap-2">
+                      <div className="flex flex-wrap gap-2">
                         {["Franchise", "Merchant", "Delivery Partner", "Other"].map((option) => (
-                          <Badge key={option} variant="outline" className="cursor-pointer hover:bg-[#059669] hover:text-white hover:border-[#059669] transition-all px-4 py-2 text-sm min-h-[44px] inline-flex items-center">{option}</Badge>
+                          <button
+                            key={option}
+                            type="button"
+                            onClick={() => setSelectedInterest(option)}
+                            className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
+                              selectedInterest === option
+                                ? "bg-[#059669] text-white border-[#059669] shadow-md"
+                                : "bg-white text-gray-600 border-gray-200 hover:border-[#059669] hover:text-[#059669]"
+                            }`}
+                          >
+                            {option}
+                          </button>
                         ))}
                       </div>
                     </div>
