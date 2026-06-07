@@ -309,8 +309,8 @@ function useInView(threshold = 0.1) {
 /* ───── Google Spreadsheet URL ───── */
 const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbw6zbhKH3CrXOJq5R5DTyI4nHtXozadBtuRWrU4zV-AsgHwOorVMg-GR4ZowRQPATqQug/exec";
 
-/* ───── Franchise Popup Modal ───── */
-function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+/* ───── Reusable Franchise Form Component ───── */
+function FranchiseForm({ onSuccess }: { onSuccess?: () => void }) {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -328,6 +328,18 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
   const talukaOptions = selectedCity && MAHARASHTRA_DATA[selectedCity]
     ? [...new Set(Object.values(MAHARASHTRA_DATA[selectedCity]).flat())]
     : [];
+
+  const resetForm = () => {
+    setFullName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
+    setSelectedInterest("");
+    setSelectedState("");
+    setSelectedCity("");
+    setSelectedTaluka("");
+    setSubmitted(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -359,125 +371,126 @@ function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void 
   };
 
   const handleOk = () => {
-    setSubmitted(false);
-    setFullName("");
-    setPhone("");
-    setEmail("");
-    setMessage("");
-    setSelectedInterest("");
-    setSelectedState("");
-    setSelectedCity("");
-    setSelectedTaluka("");
-    onClose();
+    resetForm();
+    if (onSuccess) onSuccess();
   };
 
+  if (submitted) {
+    return (
+      <div className="p-10 text-center space-y-4">
+        <div className="w-20 h-20 rounded-full bg-[#EAB308]/10 flex items-center justify-center mx-auto">
+          <CheckCircle2 className="h-10 w-10 text-[#EAB308]" />
+        </div>
+        <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
+        <p className="text-gray-600">We&apos;ll get back to you within 2 hours or Reach us on WhatsApp <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="text-[#059669] hover:underline font-semibold">+91 9823166155</a></p>
+        <button onClick={handleOk} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
+          <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" required className="rounded-xl h-12" />
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
+          <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
+        </div>
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
+        <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
+      </div>
+      {/* State / City / Taluka Cascading Dropdowns */}
+      <div className="grid sm:grid-cols-3 gap-4">
+        <div>
+          <label className="text-sm font-medium text-gray-700 mb-1.5 block">State</label>
+          <Select value={selectedState} onValueChange={(val) => { setSelectedState(val); setSelectedCity(""); setSelectedTaluka(""); }} required>
+            <SelectTrigger className="w-full rounded-xl h-12">
+              <SelectValue placeholder="Select State" />
+            </SelectTrigger>
+            <SelectContent>
+              {STATES.map((state) => (
+                <SelectItem key={state} value={state}>{state}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700 mb-1.5 block">City</label>
+          <Select value={selectedCity} onValueChange={(val) => { setSelectedCity(val); setSelectedTaluka(""); }} disabled={!selectedState} required>
+            <SelectTrigger className="w-full rounded-xl h-12">
+              <SelectValue placeholder={selectedState ? "Select City" : "Select State first"} />
+            </SelectTrigger>
+            <SelectContent>
+              {cityOptions.map((city) => (
+                <SelectItem key={city} value={city}>{city}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700 mb-1.5 block">Taluka</label>
+          <Select value={selectedTaluka} onValueChange={setSelectedTaluka} disabled={!selectedCity} required>
+            <SelectTrigger className="w-full rounded-xl h-12">
+              <SelectValue placeholder={selectedCity ? "Select Taluka" : "Select City first"} />
+            </SelectTrigger>
+            <SelectContent>
+              {talukaOptions.map((taluka) => (
+                <SelectItem key={taluka} value={taluka}>{taluka}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 mb-1.5 block">I&apos;m Interested In</label>
+        <div className="flex flex-wrap gap-2">
+          {["Franchise", "Merchant", "Delivery Partner", "Other"].map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => setSelectedInterest(option)}
+              className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
+                selectedInterest === option
+                  ? "bg-[#059669] text-white border-[#059669] shadow-md"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-[#059669] hover:text-[#059669]"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div>
+        <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
+        <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
+      </div>
+      <Button type="submit" size="lg" disabled={submitting} className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
+        {submitting ? "Sending..." : <>Send Message <ArrowRight className="ml-2 h-5 w-5" /></>}
+      </Button>
+    </form>
+  );
+}
+
+/* ───── Franchise Popup Modal ───── */
+function FranchiseModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto p-0 rounded-3xl border-0 shadow-2xl" showCloseButton={false}>
         <DialogTitle className="sr-only">Get Franchise - Send Us a Message</DialogTitle>
-        {submitted ? (
-          <div className="p-10 text-center space-y-4">
-            <div className="w-20 h-20 rounded-full bg-[#EAB308]/10 flex items-center justify-center mx-auto">
-              <CheckCircle2 className="h-10 w-10 text-[#EAB308]" />
-            </div>
-            <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
-            <p className="text-gray-600">We&apos;ll get back to you within 2 hours or Reach us on WhatsApp <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="text-[#059669] hover:underline font-semibold">+91 9823166155</a></p>
-            <button onClick={handleOk} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
+        <div className="p-5 sm:p-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]">Send Us a Message</h3>
+            <button onClick={onClose} className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
+              <X className="h-4 w-4 text-gray-500" />
+            </button>
           </div>
-        ) : (
-          <div className="p-5 sm:p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)]">Send Us a Message</h3>
-              <button onClick={onClose} className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
-                <X className="h-4 w-4 text-gray-500" />
-              </button>
-            </div>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
-                  <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" required className="rounded-xl h-12" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
-                  <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
-                <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
-              </div>
-              {/* State / City / Taluka Cascading Dropdowns */}
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">State</label>
-                  <Select value={selectedState} onValueChange={(val) => { setSelectedState(val); setSelectedCity(""); setSelectedTaluka(""); }} required>
-                    <SelectTrigger className="w-full rounded-xl h-12">
-                      <SelectValue placeholder="Select State" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {STATES.map((state) => (
-                        <SelectItem key={state} value={state}>{state}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">City</label>
-                  <Select value={selectedCity} onValueChange={(val) => { setSelectedCity(val); setSelectedTaluka(""); }} disabled={!selectedState} required>
-                    <SelectTrigger className="w-full rounded-xl h-12">
-                      <SelectValue placeholder={selectedState ? "Select City" : "Select State first"} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {cityOptions.map((city) => (
-                        <SelectItem key={city} value={city}>{city}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Taluka</label>
-                  <Select value={selectedTaluka} onValueChange={setSelectedTaluka} disabled={!selectedCity} required>
-                    <SelectTrigger className="w-full rounded-xl h-12">
-                      <SelectValue placeholder={selectedCity ? "Select Taluka" : "Select City first"} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {talukaOptions.map((taluka) => (
-                        <SelectItem key={taluka} value={taluka}>{taluka}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-1.5 block">I&apos;m Interested In</label>
-                <div className="flex flex-wrap gap-2">
-                  {["Franchise", "Merchant", "Delivery Partner", "Other"].map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => setSelectedInterest(option)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
-                        selectedInterest === option
-                          ? "bg-[#059669] text-white border-[#059669] shadow-md"
-                          : "bg-white text-gray-600 border-gray-200 hover:border-[#059669] hover:text-[#059669]"
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
-                <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
-              </div>
-              <Button type="submit" size="lg" disabled={submitting} className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
-                {submitting ? "Sending..." : <>Send Message <ArrowRight className="ml-2 h-5 w-5" /></>}
-              </Button>
-            </form>
-          </div>
-        )}
+          <FranchiseForm onSuccess={onClose} />
+        </div>
       </DialogContent>
     </Dialog>
   );
@@ -1208,52 +1221,6 @@ function FranchiseSection({ onFranchiseClick }: { onFranchiseClick: () => void }
 /* ───── Contact Section ───── */
 function ContactSection() {
   const { ref, isInView } = useInView();
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [selectedInterest, setSelectedInterest] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedTaluka, setSelectedTaluka] = useState("");
-
-  // When State is selected (Maharashtra), show cities
-  const cityOptions = selectedState ? Object.keys(MAHARASHTRA_DATA) : [];
-  // When City is selected, show talukas (unique only)
-  const talukaOptions = selectedCity && MAHARASHTRA_DATA[selectedCity]
-    ? [...new Set(Object.values(MAHARASHTRA_DATA[selectedCity]).flat())]
-    : [];
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    try {
-      const data = {
-        fullName,
-        phone,
-        email,
-        interest: selectedInterest,
-        state: selectedState,
-        city: selectedCity,
-        taluka: selectedTaluka,
-        message,
-      };
-      await fetch(GOOGLE_SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      setSubmitted(true);
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitted(true); // Still show success to user
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   return (
     <section id="contact" className="py-16 sm:py-28 bg-white" ref={ref}>
@@ -1284,102 +1251,8 @@ function ContactSection() {
           <div className={`transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
             <Card className="shadow-xl border-0 rounded-3xl overflow-hidden">
               <CardContent className="p-5 sm:p-8">
-                {submitted ? (
-                  <div className="text-center py-12 space-y-4">
-                    <div className="w-20 h-20 rounded-full bg-[#EAB308]/10 flex items-center justify-center mx-auto">
-                      <CheckCircle2 className="h-10 w-10 text-[#EAB308]" />
-                    </div>
-                    <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)]">Thank You!</h3>
-                    <p className="text-gray-600">We&apos;ll get back to you within 2 hours or Reach us on WhatsApp <a href="https://wa.me/919823166155?text=Hello%2C%20I%20am%20interested%20in%20your%20Mozoo%20Services.%20Please%20provide%20me%20more%20details." target="_blank" rel="noopener noreferrer" className="text-[#059669] hover:underline font-semibold">+91 9823166155</a></p>
-                    <button onClick={() => { setSubmitted(false); setFullName(""); setPhone(""); setEmail(""); setMessage(""); setSelectedInterest(""); setSelectedState(""); setSelectedCity(""); setSelectedTaluka(""); }} className="mt-4 px-8 py-3 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-xl transition-colors text-lg">OK</button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] mb-2">Send Us a Message</h3>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">Full Name</label>
-                        <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" required className="rounded-xl h-12" />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">Phone Number</label>
-                        <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" type="tel" required className="rounded-xl h-12" />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address</label>
-                      <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" type="email" required className="rounded-xl h-12" />
-                    </div>
-                    {/* State / City / Taluka Cascading Dropdowns */}
-                    <div className="grid sm:grid-cols-3 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">State</label>
-                        <Select value={selectedState} onValueChange={(val) => { setSelectedState(val); setSelectedCity(""); setSelectedTaluka(""); }} required>
-                          <SelectTrigger className="w-full rounded-xl h-12">
-                            <SelectValue placeholder="Select State" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {STATES.map((state) => (
-                              <SelectItem key={state} value={state}>{state}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">City</label>
-                        <Select value={selectedCity} onValueChange={(val) => { setSelectedCity(val); setSelectedTaluka(""); }} disabled={!selectedState} required>
-                          <SelectTrigger className="w-full rounded-xl h-12">
-                            <SelectValue placeholder={selectedState ? "Select City" : "Select State first"} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {cityOptions.map((city) => (
-                              <SelectItem key={city} value={city}>{city}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1.5 block">Taluka</label>
-                        <Select value={selectedTaluka} onValueChange={setSelectedTaluka} disabled={!selectedCity} required>
-                          <SelectTrigger className="w-full rounded-xl h-12">
-                            <SelectValue placeholder={selectedCity ? "Select Taluka" : "Select City first"} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {talukaOptions.map((taluka) => (
-                              <SelectItem key={taluka} value={taluka}>{taluka}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1.5 block">I&apos;m Interested In</label>
-                      <div className="flex flex-wrap gap-2">
-                        {["Franchise", "Merchant", "Delivery Partner", "Other"].map((option) => (
-                          <button
-                            key={option}
-                            type="button"
-                            onClick={() => setSelectedInterest(option)}
-                            className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
-                              selectedInterest === option
-                                ? "bg-[#059669] text-white border-[#059669] shadow-md"
-                                : "bg-white text-gray-600 border-gray-200 hover:border-[#059669] hover:text-[#059669]"
-                            }`}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1.5 block">Message</label>
-                      <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your interest..." rows={4} required className="rounded-xl" />
-                    </div>
-                    <Button type="submit" size="lg" disabled={submitting} className="w-full bg-gradient-to-r from-[#059669] to-[#10B981] hover:from-[#047857] hover:to-[#059669] text-white font-bold rounded-full text-lg py-6">
-                      {submitting ? "Sending..." : <>Send Message <ArrowRight className="ml-2 h-5 w-5" /></>}
-                    </Button>
-                  </form>
-                )}
+                <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] mb-2">Send Us a Message</h3>
+                <FranchiseForm />
               </CardContent>
             </Card>
           </div>
