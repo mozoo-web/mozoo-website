@@ -423,7 +423,7 @@ function FranchiseForm({ onSuccess }: { onSuccess?: () => void }) {
           <label className="text-sm font-medium text-gray-700 mb-1.5 block">City</label>
           <Select value={selectedCity} onValueChange={(val) => { setSelectedCity(val); setSelectedTaluka(""); }} disabled={!selectedState} required>
             <SelectTrigger className="w-full rounded-xl h-12">
-              <SelectValue placeholder={selectedState ? "Select City" : "Select State first"} />
+              <SelectValue placeholder="Select City" />
             </SelectTrigger>
             <SelectContent>
               {cityOptions.map((city) => (
@@ -436,7 +436,7 @@ function FranchiseForm({ onSuccess }: { onSuccess?: () => void }) {
           <label className="text-sm font-medium text-gray-700 mb-1.5 block">Taluka</label>
           <Select value={selectedTaluka} onValueChange={setSelectedTaluka} disabled={!selectedCity} required>
             <SelectTrigger className="w-full rounded-xl h-12">
-              <SelectValue placeholder={selectedCity ? "Select Taluka" : "Select City first"} />
+              <SelectValue placeholder="Select Taluka" />
             </SelectTrigger>
             <SelectContent>
               {talukaOptions.map((taluka) => (
@@ -625,11 +625,9 @@ function HeroSection({ onFranchiseClick }: { onFranchiseClick: () => void }) {
                   Start Your Franchise
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              <button onClick={() => scrollToSection("services")} className="flex-1">
-                <Button size="lg" variant="outline" className="w-full border-2 border-[#EAB308] text-[#EAB308] hover:bg-[#EAB308] hover:text-white font-bold px-8 py-6 text-lg rounded-full transition-all">
-                  Explore Services
-                </Button>
-              </button>
+              <Button size="lg" variant="outline" onClick={() => scrollToSection("services")} className="flex-1 border-2 border-[#EAB308] text-[#EAB308] hover:bg-[#EAB308] hover:text-white font-bold px-8 py-6 text-lg rounded-full transition-all">
+                Explore Services
+              </Button>
             </div>
             <div className="flex flex-wrap gap-6 pt-4">
               <div className="flex items-center gap-2 text-gray-600">

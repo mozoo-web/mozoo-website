@@ -111,7 +111,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-IN" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en-IN" suppressHydrationWarning className="scroll-smooth overflow-x-hidden">
       <head>
         <script
           type="application/ld+json"
